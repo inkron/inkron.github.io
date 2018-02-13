@@ -1,16 +1,23 @@
-var socket = io.connect("https://2539a917.ngrok.io")
+var socket = io.connect("http://0c61ebc9.ngrok.io")
 indexPage = false
 fAdded = false
 username = null
 page = "home"
+privateTimer = null
 curruProfile = null
 currNotifications = null
 currFriends = null
 currUserChat = null
 currUserChatHistory = null
+privateIsTyping = false
 function login(sessionKey){
 				socket.emit("login", sessionKey)
 			}
+function sendTyping(){
+	privateIsTyping = false;
+	console.log("typingEventFalse")
+	socket.emit("typingEvent", privateIsTyping, username, currUserChat[0])
+}
 function render(page){
 	if (page === "homeA1"){
 		page = "home"
@@ -215,6 +222,14 @@ $(function(){
 			}
 	})
 
+	socket.on("typingEventResponse", function(event, user){
+		if (event){
+			$(".userChatTopNav").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + user + " is typing...</div></div>")
+		}else{
+			$(".typingEvent").remove()
+		}
+	})
+
 	socket.on("getFriendsResponse", function(friends){
 		currFriends = friends
 		render("friendsA1")
@@ -252,6 +267,7 @@ $(function(){
 		searchShown = false
 	});
 	$('body').on('click', '.bbc', function(){
+		socket.emit("disconnectFromChat", username)
 		socket.emit("getFriends", username)
 	});
 	$('body').on('click', '#friends', function(){
@@ -318,10 +334,20 @@ $(function(){
 		e.preventDefault();
 		$(".chatContainer").append("<div class='chatBoxUser'>" + $(".userChatInput").val() + "</div>")
 		socket.emit("sendMessage", $(".userChatInput").val(), username, currUserChat[0])
+		sendTyping()
 		$('body').animate({scrollTop: $('body').get(0).scrollHeight}, 2000);
 		$(".userChatInput").val("")
 	})
 	$('body').on('focus', '.userChatInput', function(){
 		$('body').animate({scrollTop: $('body').get(0).scrollHeight}, 2000);
+	})
+	$('body').on('keydown', '.userChatInput', function(){
+		if (!(privateIsTyping)){
+			privateIsTyping = true
+			console.log("typingEventTrue")
+			socket.emit("typingEvent", privateIsTyping, username, currUserChat[0])
+		}
+			clearTimeout(privateTimer)
+			privateTimer = setTimeout(sendTyping, 1000)
 	})
 })
