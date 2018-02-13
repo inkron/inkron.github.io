@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700,900');
+body{
+	margin: auto 0;
+}
+
+
+.loginBox{
+	width: 250px;
+	height: 100%;
+	margin: 0px;
+}
+
+.loginBox .title{
+	padding-top: calc(50vh - 150px);
+	margin-bottom: 20px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900;
+	font-size: 50px;
+
+}
+
+.loginBox .input{
+	padding-left: 20px;
+	padding-right: 20px;
+	text-align: center;
+	font-family: 'Roboto', sans-serif;
+	font-size: 15px;
+	font-weight: 900;
+	margin-bottom: 15px;
+	border-radius:30px;
+	border-width: 0;
+	background-color: #ececec;
+	height: 50px;
+	width: 200px;
+	outline: none;
+}
+.loginBox .input::-webkit-input-placeholder{
+	opacity: 100;
+}
+.loginBox .button{
+	font-weight: 700;
+	margin-bottom: 15px;
+	border-radius:30px;
+	border-width: 0;
+	background-color: #1a1a1a;
+	height: 50px;
+	width: 130px;
+	outline: none;
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	color: #FFFFFF;
+
+}
+
+.loginBox .button:hover{
+	background-color: #212121
+}
+.loginBox .button:active{
+	background-color: #ff2a5a
+}
+.loginBox .input:focus::-webkit-input-placeholder {
+    opacity: 0;
+}
+.errortext{
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 15px;
+	color: #ff2a32;
+}

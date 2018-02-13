@@ -1,0 +1,511 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700,900');
+body{
+}
+
+.topNav{
+	box-shadow: .2px .2px .2px .2px #aeaeae;
+	position: fixed;
+	top: 0%;
+	width: 100%;
+	height: 70px;
+	background-color: #efefef;
+}
+
+.bottomNav{
+	z-index: 100;
+	box-shadow: 3px 3px 3px 3px grey;
+	position: fixed;
+	top: calc(100% - 120px);
+	width: 100%;
+	height: 125px;
+	background-color: #efefef;
+}
+.testText{
+	font-size: 300px;
+}
+.bottomNav .bnButton{
+	margin: 0;
+	cursor: pointer;
+	display: flex;
+	position: fixed;
+	top: calc(100% - 120px);
+	width: calc(100% / 3);
+	border-width: 0px;
+	outline: none;
+	height: 125px;
+	float: right;
+}
+#friends{
+	left: 0%;
+}
+#home{
+	right: calc(100% / 3);
+}
+#mail{
+	left: calc((100% / 3) * 2);
+}
+#Image{
+	position: relative;
+	top: calc(50% - 20px);
+	left: calc(50% - 20px);;
+	width: 40px;
+	height: 40px;
+}
+.bottomNav .bnButton:active{
+	background-color: #FFFFFF;
+}
+
+.topNav .searchQuery{
+	padding-left: 20px;
+	padding-right: 20px;
+	text-align: center;
+	font-family: 'Roboto', sans-serif;
+	font-size: 15px;
+	font-weight: 900;
+	margin-top: 20px;
+	margin-bottom: 15px;
+	border-radius:10px;
+	border-width: 0;
+	background-color: #dedede;
+	height: 30px;
+	width: 50%;
+	outline: none;
+}
+
+.topNav .searchQuery:focus{
+	background-color: #cdcdcd;
+}
+
+.bb{
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	top: 30%;
+	left: 7%;
+}
+
+.bb:active{
+	filter:brightness(300%);
+}
+
+#friends:active{
+	filter:brightness(80%);
+}
+
+#home:active{
+	filter:brightness(80%);
+}
+
+#mail:active{
+	filter:brightness(80%);
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 50px);
+  width: 100px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 25px;
+  height: 25px;
+  background-color: #fc4d94;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
+
+.sqContainer{	
+	margin-top: 80px;
+}
+
+.userBox{
+	cursor: pointer;
+  	line-height: 50px;
+    text-align: center;
+	background-color: #efefef;
+	width: 100%;
+	height: 50px;
+	margin-top: 10px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 13px;
+}
+.userbox:active{
+	background-color: #FFFFFF;
+}
+.uProfileBox{
+	position: fixed;
+	top: 0%;
+	width: 100%;
+	height: 100px;
+	background-color: #f1f1f1;
+}
+.uProfileUsername{
+	left: 15%;
+	top: 20%;
+	position: absolute;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900;
+	font-size: 40px;
+}
+.uProfileName{
+	position: absolute;
+	left: 15%;
+	top: 60%;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 15px;
+	color: #6f6f6f;
+}
+.uProfileAddFriend{
+	cursor: pointer;
+	position: absolute;
+	top: 100%;
+	left: calc(90% - 120px);
+	font-weight: 700;
+	border: none;
+	border-color: #dddddd;
+	background-color: #f1f1f1;
+	height: 40px;
+	width: 120px;
+	outline: none;
+	font-family: 'Roboto', sans-serif;
+	font-size: 15px;
+	color: #62d862;
+}
+
+.uProfileAddFriend:active{
+	background-color: #e1e1e1;
+}
+
+.uProfileSendMessage{
+	cursor: pointer;
+	position: absolute;
+	top: 100%;
+	left: calc(90% - 120px);
+	font-weight: 700;
+	border: none;
+	border-color: #dddddd;
+	background-color: #f1f1f1;
+	height: 40px;
+	width: 120px;
+	outline: none;
+	font-family: 'Roboto', sans-serif;
+	font-size: 13px;
+	color: #999999;
+}
+
+.uProfileSendMessage:active{
+	background-color: #e1e1e1;
+}
+
+.notBox{
+	cursor: pointer;
+  	line-height: 50px;
+    text-align: center;
+	background-color: #efefef;
+	width: 100%;
+	height: 50px;
+	margin-bottom: 60px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 13px;
+}
+
+.notBoxL{
+	cursor: pointer;
+  	line-height: 50px;
+    text-align: center;
+	background-color: #efefef;
+	width: 100%;
+	height: 50px;
+	margin-bottom: 185px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 13px;
+}
+
+.accFriendRequest{
+	position: absolute;
+	width: 17px;
+	height: 17px;
+	left: calc(50% - 8.5px);
+	top: calc(50% - 8.5px);
+}
+.dismissNotification{
+	position: absolute;
+	width: 17px;
+	height: 17px;
+	left: calc(50% - 8.5px);
+	top: calc(50% - 8.5px);
+}
+.notButton1{
+	width: 50%;
+	height: 40px;
+	position: absolute;
+	left: 0%;
+	top: calc(50% - 20px);
+}
+.notButton2{
+	width: 50%;
+	height: 40px;
+	position: absolute;
+	left: 50%;
+	top: calc(50% - 20px);
+}
+.notButtons{
+	box-shadow: .2px .2px .2px .2px #aeaeae;
+	position: absolute;;
+	height: 40px;
+	width: 100%;
+	background-color: #f1f1f1;
+}
+
+.notButton1:active{
+	background-color: #e1e1e1;
+}
+.notButton2:active{
+	background-color: #e1e1e1;
+}
+
+.defaultText#a1{
+	position: absolute;
+	margin: auto;
+	top: 43%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+	color: #b2b2b2;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 24px;
+}
+.defaultText#a2{
+	position: absolute;
+	margin: auto;
+	top: 45%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+	color: #b2b2b2;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 24px;
+}
+.friBox{
+	margin: 0;
+	position: relative;
+	background-color: #efefef;
+	width: 100%;
+	height: 70px;
+	margin-bottom: 80px;
+}
+
+.friBoxUName{
+	top: 10%;
+	transform: translateY(-50%)
+	margin-top: 0px;
+	position: relative;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900;
+	font-size: 30px;
+}
+.friBoxName{
+	top: 10%;
+	position: relative;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 13px;
+	color: grey;
+}
+.friButton1{
+	cursor: pointer;
+	color: #62d862;
+	background-color: #efefef;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	border: none;
+	outline: none;
+	width: 70%;
+	height: 40px;
+	position: absolute;
+	left: 0%;
+	top: calc(50% - 20px);
+}
+.friButton2{
+	border-style: solid;
+	border-left-width:  1px;
+	border-right-width: 0px;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	cursor: pointer;
+	color: #f44259;
+	background-color: #efefef;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	outline: none;
+	width: 30%;
+	height: 40px;
+	position: absolute;
+	left: 70%;
+	top: calc(50% - 20px);
+}
+
+.friButtons{
+	border: none;
+	outline: none;
+	box-shadow: .2px .2px .2px .2px #aeaeae;
+	position: relative;
+	top: 27%;
+	height: 40px;
+	width: 100%;
+	background-color: #f1f1f1;
+}
+
+.friButton1:active{
+	background-color: #e1e1e1;
+}
+.friButton2:active{
+	background-color: #e1e1e1;
+}
+.friBoxL{
+	margin: 0;
+	position: relative;
+	background-color: #efefef;
+	width: 100%;
+	height: 70px;
+	margin-bottom: 205px;
+}
+
+.bbc{
+	z-index: 100;
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	top: 30%;
+	left: 7%;
+}
+
+.bbc:active{
+	filter:brightness(300%);
+}
+
+.userChatTopNav{
+	position: fixed;
+	z-index: 100;
+	box-shadow: .1px .1px .1px .1px grey;
+	background-color: #efefef;
+	width: 100%;
+	height: 70px;
+}
+
+.userChatUName{
+	top: 10%;
+	transform: translateY(-50%)
+	margin-top: 0px;
+	position: relative;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900;
+	font-size: 30px;
+}
+.userChatName{
+	top: 10%;
+	position: relative;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 13px;
+	color: grey;
+}
+
+.userChatBottomNav{
+	z-index: 99;
+	box-shadow: 3px 3px 3px 3px grey;
+	position: fixed;
+	top: calc(100% - 70px);
+	width: 100%;
+	height: 70px;
+	background-color: #efefef;
+}
+
+.userChatBottomNav .userChatInput{
+	padding-left: 20px;
+	padding-right: 20px;
+	text-align: center;
+	font-family: 'Roboto', sans-serif;
+	font-size: 15px;
+	margin-top: 20px;
+	margin-bottom: 15px;
+	border-radius:10px;
+	border-width: 0;
+	background-color: #dedede;
+	height: 30px;
+	width: 50%;
+	outline: none;
+}
+
+.chatContainer{
+	width: 100%;
+	position: absolute;
+	margin-top: 90px;
+	margin-bottom: 70px;
+	z-index: 98; 
+}
+
+.chatBoxOtherUser{
+	display:block;
+	overflow:auto;
+	word-wrap: break-word;
+	border-radius: 5px;
+	left: 0%;
+	margin-bottom: 30px;
+	overflow: auto;
+	font-family: 'Roboto', sans-serif;
+	background-color: #dedede;
+	max-width: 75%;
+	margin-right: 20px;
+	text-align: left;
+	padding: 10px 10px 10px 10px;
+}
+
+.chatBoxUser{
+	border-radius: 5px;
+	left: 0%;
+	display:block;
+	overflow:auto;
+	word-wrap: break-word;
+	margin-bottom: 30px;
+	font-family: 'Roboto', sans-serif;
+	background-color: #62d862;
+	max-width: 75%;
+	text-align: left;
+	padding: 10px 10px 10px 10px;
+	margin-left: 20px;
+}

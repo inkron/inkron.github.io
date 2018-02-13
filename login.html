@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Security-Policy" content="default-src *; script-src * 'unsafe-inline'; object-src *; img-src *; media-src *; frame-src *; font-src *; connect-src * ">
+		<meta http-equiv="X-Content-Security-Policy" content="default-src *; script-src * 'unsafe-inline'; object-src *; img-src *; media-src *; frame-src *; font-src *; connect-src *">
+		<meta http-equiv="X-WebKit-CSP" content="default-src *; script-src * 'unsafe-inline'; object-src *; img-src *; media-src *; frame-src *; font-src *; connect-src *">
+		<meta name="viewport" content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no, user-scalable=0"/>
+		<script src="socket.io.js"></script>
+		<script src="jquery-3.3.1.min.js"></script>
+		<script src="manager.js"></script>
+		<link rel="stylesheet" type="text/css" href="login-files/style.css">
+		<link rel="stylesheet" type="text/css" href="universal.css">
+
+	</head>
+	<body>
+		<center>
+			<div class="loginBox">
+				<div class="title">Login</div>
+				<input type="text" placeholder="email or username" class="input" autocapitalize="none" id="email">
+				<input type="password" placeholder="password" class="input" id="password">
+				<button class="button">login</button>
+			</div>
+		</center>
+		<script>
+			$(function(){
+					var errortextPresent = false;
+					$(".button").click(function(){
+						socket.emit("getSessionKey", $("#email").val(), $("#password").val())
+					});
+					socket.on("clientLoginResponse", function(response){
+						if (response[0] == false){
+								$(".errortext").remove()
+								$(".loginBox").append("<div class='errortext'>" + response[1] + "</div>");
+						}else if (response[0] == true){
+								localStorage.setItem("sessionKey", response[1]);
+								login(response[1])
+							}
+					});
+			});
+		</script>
+	</body>

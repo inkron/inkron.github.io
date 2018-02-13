@@ -1,0 +1,40 @@
+body{
+	margin: auto 0;
+}
+.loginBox{
+	position: absolute;
+	display: table;
+	width: 200px;
+	height: 100%;
+	left: 50%;
+	margin-left: -85px;
+}
+.buttons{
+	position: absolute;
+	top:50vh;
+	margin-top: -170px;
+}
+
+.loginBox .buttons .logo{
+	margin-bottom: 20px;
+}
+.loginBox .buttons .button{
+	font-weight: 700;
+	border-radius:10px;
+	border-width: 2px;
+	border-color: #dddddd;
+	border-style: solid;
+	background-color: #FFFFFF;
+	height: 50px;
+	width: 170px;
+	outline: none;
+	font-family: 'Roboto', sans-serif;
+	font-size: 17px;
+	color: #777777;
+
+}
+.loginBox .button:active{
+	background-color: #ff2a5a;
+	border-color: #ff1046;
+	color: #FFFFFF;
+}
