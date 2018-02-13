@@ -1,5 +1,5 @@
 var socket = io.connect("http://0c61ebc9.ngrok.io")
-indexPage = false
+indexPage = false;
 fAdded = false
 username = null
 page = "home"
