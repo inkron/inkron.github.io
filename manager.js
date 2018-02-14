@@ -171,7 +171,7 @@ $(function(){
 	})
 
 	socket.on("incomingMessage", function(payload){
-		$(".chatContainer").append("<div class='chatBoxOtherUser'>" + payload[1] + "</div>")
+		$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxOtherUser'>" + payload[0] + "</div></div></div>")
 		$('body').animate({scrollTop: $('body').get(0).scrollHeight}, 2000);
 	});
 
