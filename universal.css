@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700,900');
 body{
+	overflow-x: hidden;
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+    -webkit-tap-highlight-color: transparent;
 }
 
 .topNav{
@@ -446,6 +449,7 @@ body{
 }
 
 .userChatBottomNav{
+	position: fixed;
 	z-index: 99;
 	box-shadow: 3px 3px 3px 3px grey;
 	position: fixed;
@@ -472,40 +476,124 @@ body{
 }
 
 .chatContainer{
+	left: 12%;
+	padding: 0px;
 	width: 100%;
 	position: absolute;
 	margin-top: 90px;
 	margin-bottom: 70px;
 	z-index: 98; 
 }
+.cboum{
+	margin-bottom: 20px;
+	left: 0%;
+	margin: 0;
+	width: 100%;
+	overflow: auto;
+}
+
+.cbour{
+	margin-bottom: 20px;
+	max-width: 75%;
+	width: auto;
+}
+
+.cbum{
+	margin-bottom: 20px;
+	left: 0%;
+	margin: 0;
+	width: 100%;
+	overflow: auto;
+}
+
+.cbur{
+	margin-bottom: 20px;
+	direction: rtl;
+	max-width: 75%;
+	width: auto;
+}
 
 .chatBoxOtherUser{
-	display:block;
-	overflow:auto;
-	word-wrap: break-word;
+	white-space: normal;
+	position: relative;
 	border-radius: 5px;
 	left: 0%;
-	margin-bottom: 30px;
-	overflow: auto;
+	display:inline-block;
+	word-wrap: break-word;
 	font-family: 'Roboto', sans-serif;
 	background-color: #dedede;
 	max-width: 75%;
-	margin-right: 20px;
 	text-align: left;
 	padding: 10px 10px 10px 10px;
 }
 
 .chatBoxUser{
+	white-space: normal;
+	position: relative;
 	border-radius: 5px;
 	left: 0%;
-	display:block;
-	overflow:auto;
+	display:inline-block;
 	word-wrap: break-word;
-	margin-bottom: 30px;
 	font-family: 'Roboto', sans-serif;
 	background-color: #62d862;
 	max-width: 75%;
 	text-align: left;
 	padding: 10px 10px 10px 10px;
-	margin-left: 20px;
+}
+
+.typingEvent{
+	z-index: 100;
+}
+
+.chatBoxUserTypingText{
+	font-family: 'Roboto', sans-serif;
+	font-size: 13px;
+	font-weight: 700;
+	color: #62d862;
+	left : 70%;
+	margin-right: 10px;
+	float: right;
+}
+
+.spinnerChat {
+  float: right;
+  margin: 100px auto 0;
+  width: 70px;
+  text-align: center;
+}
+
+.spinnerChat > div {
+  width: 5px;
+  height: 5px;
+  background-color: #000000;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinnerChat .sounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinnerChat .sounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
 }
