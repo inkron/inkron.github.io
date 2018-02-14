@@ -1,4 +1,4 @@
-var socket = io.connect("https://28a44d8b.ngrok.io")
+var socket = io.connect("https://41bdc560.ngrok.io")
 indexPage = false
 fAdded = false
 username = null
