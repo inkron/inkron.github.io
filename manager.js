@@ -1,5 +1,5 @@
-var socket = io.connect("https://0c61ebc9.ngrok.io")
-indexPage = false;
+var socket = io.connect("https://28a44d8b.ngrok.io")
+indexPage = false
 fAdded = false
 username = null
 page = "home"
@@ -125,7 +125,7 @@ function render(page){
 		$(".friContainer").remove()
 		$(".topNav").remove()
 		$("center").append("<div class='userChatTopNav'><div class='bbc'><img src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='userChatUName'>" + currUserChat[0] + "</div><div class='userChatName'>" + currUserChat[1] + "</div></div>")
-		$("center").append("<div class='chatContainer'></div>")
+		$("body").append("<div class='chatContainer'></div>")
 		$("center").append("<div class='userChatBottomNav'><form class='usform'><input class='userChatInput'></input></div></div>")
 	}
 }
@@ -180,9 +180,9 @@ $(function(){
 		if(history.length != 0){
 			for (var i in history){
 				if (history[i][0] === username){
-					$(".chatContainer").append("<div class='chatBoxUser'>" + history[i][1] + "</div>")
+					$(".chatContainer").append("<div class='cbum'><div class='cbur'><div class='chatBoxUser' dir='ltr'>" + history[i][1] + "</div></div></div>")
 				}else{
-					$(".chatContainer").append("<div class='chatBoxOtherUser'>" + history[i][1] + "</div>")
+					$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxOtherUser'>" + history[i][1] + "</div></div></div>")
 				}
 			}
 			$('body').animate({scrollTop: $('body').get(0).scrollHeight}, 2000);
@@ -332,7 +332,7 @@ $(function(){
 	});
 	$('body').on('submit', '.usform', function(e){
 		e.preventDefault();
-		$(".chatContainer").append("<div class='chatBoxUser'>" + $(".userChatInput").val() + "</div>")
+		$(".chatContainer").append("<div class='cbum'><div class='cbur'><div class='chatBoxUser' dir='ltr'>" +  $(".userChatInput").val() + "</div></div></div>")
 		socket.emit("sendMessage", $(".userChatInput").val(), username, currUserChat[0])
 		sendTyping()
 		$('body').animate({scrollTop: $('body').get(0).scrollHeight}, 2000);
