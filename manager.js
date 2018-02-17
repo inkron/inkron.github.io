@@ -16,6 +16,18 @@ currUserData = null
 glChatId = null
 glOnUser = null
 usersTyping = []
+String.prototype.replaceAll = function(str1, str2, ignore) 
+{
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+} 
+
+function clean(html){
+	x1 = html.replaceAll("&", "&amp")
+	x2 = x1.replaceAll("<", "&lt;")
+	x3 = x2.replaceAll(">", "&gt;")
+	return x3
+}
+
 function login(sessionKey){
 				socket.emit("login", sessionKey)
 			}
@@ -474,8 +486,8 @@ $(function(){
 
 	$('body').on('submit', '.usform', function(e){
 		e.preventDefault();
-		$(".chatContainer").append("<div class='cbum'><div class='cbur'><div class='chatBoxUser' dir='ltr'>" +  $(".userChatInput").val() + "</div></div></div>")
-		socket.emit("sendMessage", chatType, $(".userChatInput").val(), username, currUserChat[0])
+		$(".chatContainer").append("<div class='cbum'><div class='cbur'><div class='chatBoxUser' dir='ltr'>" +  clean($(".userChatInput").val()) + "</div></div></div>")
+		socket.emit("sendMessage", chatType, clean($(".userChatInput").val()), username, currUserChat[0])
 		sendTyping()
 		$('body').animate({scrollTop: $('body').get(0).scrollHeight}, 2000);
 		$(".userChatInput").val("")
