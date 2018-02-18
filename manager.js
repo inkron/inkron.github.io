@@ -1,4 +1,4 @@
-var socket = io.connect("https://628832ec.ngrok.io")
+var socket = io.connect("http://192.168.1.71:3000")
 indexPage = false
 fAdded = false
 username = null
@@ -16,17 +16,7 @@ currUserData = null
 glChatId = null
 glOnUser = null
 usersTyping = []
-String.prototype.replaceAll = function(str1, str2, ignore) 
-{
-    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
-} 
 
-function clean(html){
-	x1 = html.replaceAll("&", "&amp")
-	x2 = x1.replaceAll("<", "&lt;")
-	x3 = x2.replaceAll(">", "&gt;")
-	return x3
-}
 
 function login(sessionKey){
 				socket.emit("login", sessionKey)
@@ -36,6 +26,22 @@ function sendTyping(){
 	console.log("typingEventFalse")
 	socket.emit("typingEvent", privateIsTyping, username, glChatId)
 }
+
+function remove(){
+	$(".gc").remove()
+	$(".friContainer").remove()
+	$(".chatContainer").remove()
+	$(".defaultText").remove()
+	$(".uProfileBox").remove()
+	$(".him").attr("src", "app-assets/homeS.svg")
+	$("body").css("background-color", "#e7e7e7");
+	$(".loginBox").remove()
+	$(".sq").remove()
+	$(".bottomNav").remove()
+	$(".notContainer").remove()
+	$(".topNav").remove()
+}
+
 function render(page){
 	if (page === "homeA1"){
 		page = "home"
@@ -53,7 +59,7 @@ function render(page){
 		$(".notContainer").remove()
 		$(".topNav").remove()
 		var name = $("#email").val()
-		$("center").append("<div class='topNav'><input class='searchQuery'></input></div>")
+		$("center").append("<div class='topNav'><input class='searchQuery' placeholder='Search Users'></input></div>")
 		$("center").append("<div class='bottomNav'><div class='bnButton' id='friends'><img class='fim' id='Image' src='app-assets/userN.svg'></img></div><div class='bnButton' id='home'><img class='him' id='Image' src='app-assets/homeN.svg'></img></div><div class='bnButton' id='mail'><img class='bim' id='Image' src='app-assets/bellN.svg'></img></div></div>")	
 		$("center").append("<div class='defaultText' id='a2'>No New Posts</div>")
 		$(".him").attr("src", "app-assets/homeS.svg")
@@ -126,6 +132,9 @@ function render(page){
 		$(".bim").attr("src", "app-assets/bellS.svg")
 		$(".fim").attr("src", "app-assets/userN.svg")
 	}else if(page == "uProfileA2"){
+		$(".userChatTopNav").remove()
+		$(".chatContainer").remove()
+		$(".userChatBottomNav").remove()
 		$(".gc").remove()
 		page = "uProfile"
 		socket.emit("changePage", page, username)
@@ -138,7 +147,7 @@ function render(page){
 		if (!(fAdded)){
 				$("center").append("<div class='uProfileBox'><div class='uProfileMove'><div class='uProfileUsername'>" + curruProfile["username"] + "</div><div class='uProfileName'>" + curruProfile["name"] + "</div><button class='uProfileAddFriend'>Add Friend</button></div></div>")
 		}else{
-				$("center").append("<div class='uProfileBox'><div class='uProfileMove'><div class='uProfileUsername'>" + curruProfile["username"] + "</div><div class='uProfileName'>" + curruProfile["name"] + "</div><button class='uProfileSendMessage'>Send Message</button></div></div>")
+				$("center").append("<div class='uProfileBox'><div class='uProfileMove'><div class='uProfileUsername'>" + curruProfile["username"] + "</div><div class='uProfileName'>" + curruProfile["name"] + "</div><button class='uProfileSendMessage'>Remove Friend</button></div></div>")
 		}
 		$("center").append("<div class='bottomNav'><div class='bnButton' id='friends'><img class='fim' id='Image' src='app-assets/userN.svg'></img></div><div class='bnButton' id='home'><img class='him' id='Image' src='app-assets/homeN.svg'></img></div><div class='bnButton' id='mail'><img class='bim' id='Image' src='app-assets/bellN.svg'></img></div></div>")
 
@@ -149,16 +158,23 @@ function render(page){
 		$(".friContainer").remove()
 		$(".gc").remove()
 		$(".topNav").remove()
-		$("center").append("<div class='userChatTopNav'><div class='bbc'><img src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='userChatUName'>" + currUserChat[0] + "</div><div class='userChatName'>" + currUserChat[1] + "</div></div>")
+		$("center").append("<div class='userChatTopNav'><div class='bbc'><img class='uCBA' src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='userClickArea'><div class='userChatUName'>" + currUserChat[0] + "</div><div class='userChatName'>" + currUserChat[1] + "</div></div></div>")
 		$("body").append("<div class='chatContainer'></div>")
 		$("center").append("<div class='userChatBottomNav'><form class='usform'><input class='userChatInput'></input></div></div>")
 	}else if(page == "groupCreate"){
+		page = "groupCreate"
+		socket.emit("changePage", page, username)
 		createGroup = [username]
 		$(".gc").remove()
 		$(".bottomNav").remove()
 		$(".friContainer").remove()
 		$(".topNav").remove()
 		$("center").append("<div class='gc'><div class='gcTopNav'><div class='bbc'><img src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='gcTitle'>Create Group</div></div><div class='gcInputDiv'><div class='gcTitle2'>Choose a name</div><input class='gcGroupName' placeholder='Desired Group Name'></input></div></button><div class='gcTitle3'>Add Friends</div><div class='gcContainer'></div><button class='gcCreateButton'>Create</div>")
+	}else if(page =="chatSettings"){
+		if (chatType == 1){
+			socket.emit("getUserProfile", currUserChat[0], username)
+		}else{
+		}
 	}
 }
 $(function(){
@@ -195,9 +211,9 @@ $(function(){
 		}
 	})
 
-	socket.on("connectToUserResponse", function(chatID, array){
+	socket.on("connectToUserResponse", function(chatID, array, param){
 		console.log(array)
-		if (array[1].length == 0){
+		if (param){
 			chatType = 2;
 		}else{
 			chatType = 1;
@@ -209,24 +225,25 @@ $(function(){
 	})
 
 	socket.on("incomingMessage", function(payload){
+		console.log("oi")
 		if (payload[0] != username){
 				if (chatType == 1){
 						$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxOtherUser'>" + payload[1] + "</div></div></div>")
 					}else{
 						if (payload[0] != glOnUser){
-							$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxOtherUser'><div id='chatBoxAuthor' class='gcb" + payload[0] + "'>" + payload[0] + "</div><br><div class='chatBoxOUContent'>" + payload[1] + "</div></div></div></div>")
+							$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxOtherUser2'><div id='chatBoxAuthor' class='gcb" + payload[0] + "'>" + payload[0] + "</div><br><div class='chatBoxOUContent'>" + payload[1] + "</div></div></div></div>")
 							if (currUserData[0].includes(payload[0])){
 								var rgbArr = currUserData[2][currUserData[0].indexOf(payload[0])]
 								$('.gcb' + payload[0]).css("color", "rgb(" + rgbArr[0] + ", " + rgbArr[1] + " , " + rgbArr[2] + ")")
 							}
-							glOnUser - payload[0]
+							glOnUser = payload[0]
 						}else{
-							$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxOtherUser'><div class='chatBoxOUContent2'>" + payload[1] + "</div></div></div></div>")
-
+							$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxOtherUser2'><div class='chatBoxOUContent2'>" + payload[1] + "</div></div></div></div>")
 						}
 					}
 		}else{
-			$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxUser'>" + payload[1] + "</div></div></div>")
+			$(".chatContainer").append("<div class='cbum'><div class='cbur'><div class='chatBoxUser' dir='ltr'>" + payload[1] + "</div></div></div>")
+			glOnUser = null
 		}
 		$('body').animate({scrollTop: $('body').get(0).scrollHeight}, 2000);
 	});
@@ -245,14 +262,14 @@ $(function(){
 						$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxOtherUser'>" + history[i][1] + "</div></div></div>")
 					}else{
 						if (onUser != history[i][0]){
-							$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxOtherUser'><div id='chatBoxAuthor' class='gcb" + history[i][0] + "'>" + history[i][0] + "</div><br><div class='chatBoxOUContent'>" + history[i][1] + "</div></div></div></div>")
+							$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxOtherUser2'><div id='chatBoxAuthor' class='gcb" + history[i][0] + "'>" + history[i][0] + "</div><br><div class='chatBoxOUContent'>" + history[i][1] + "</div></div></div></div>")
 							if (currUserData[0].includes(history[i][0])){
 								var rgbArr = currUserData[2][currUserData[0].indexOf(history[i][0])]
 								$('.gcb' + history[i][0]).css("color", "rgb(" + rgbArr[0] + ", " + rgbArr[1] + " , " + rgbArr[2] + ")")
 							}
 							onUser = history[i][0]
 						}else{
-							$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxOtherUser'><div class='chatBoxOUContent2'>" + history[i][1] + "</div></div></div></div>")
+							$(".chatContainer").append("<div class='cboum'><div class='cbour'><div class='chatBoxOtherUser2'><div class='chatBoxOUContent2'>" + history[i][1] + "</div></div></div></div>")
 						}
 					}
 				}
@@ -319,25 +336,25 @@ $(function(){
 				usersTyping.push(user)
 			}
 			if (usersTyping.length == 1){
-				$(".userChatTopNav").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + usersTyping[0] + " is typing...</div></div>")
+				$(".userClickArea").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + usersTyping[0] + " is typing...</div></div>")
 			}else if (usersTyping.length == 2){
-				$(".userChatTopNav").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + usersTyping[0] + " and " + usersTyping[1] +" are typing...</div></div>")
+				$(".userClickArea").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + usersTyping[0] + " and " + usersTyping[1] +" are typing...</div></div>")
 			}else if (usersTyping.length == 3){
-				$(".userChatTopNav").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + usersTyping[0] + ", " + usersTyping[1] + "and " + usersTyping[2] +" are typing...</div></div>")
+				$(".userClickArea").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + usersTyping[0] + ", " + usersTyping[1] + "and " + usersTyping[2] +" are typing...</div></div>")
 			}else if (usersTyping.length > 3){
-				$(".userChatTopNav").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>Multiple people are typing...</div></div>")
+				$(".userClickArea").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>Multiple people are typing...</div></div>")
 			}
 		}else{
 			usersTyping.splice(usersTyping.indexOf(user), 1)
 			$(".typingEvent").remove()
 			if (usersTyping.length == 1){
-				$(".userChatTopNav").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + usersTyping[0] + " is typing...</div></div>")
+				$(".userClickArea").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + usersTyping[0] + " is typing...</div></div>")
 			}else if (usersTyping.length == 2){
-				$(".userChatTopNav").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + usersTyping[0] + " and " + usersTyping[1] +" are typing...</div></div>")
+				$(".userClickArea").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + usersTyping[0] + " and " + usersTyping[1] +" are typing...</div></div>")
 			}else if (usersTyping.length == 3){
-				$(".userChatTopNav").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + usersTyping[0] + ", " + usersTyping[1] + "and " + usersTyping[2] +" are typing...</div></div>")
+				$(".userClickArea").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>" + usersTyping[0] + ", " + usersTyping[1] + "and " + usersTyping[2] +" are typing...</div></div>")
 			}else if (usersTyping.length > 3){
-				$(".userChatTopNav").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>Multiple people are typing...</div></div>")
+				$(".userClickArea").append("<div class='typingEvent'><div class='chatBoxUserTypingText'>Multiple people are typing...</div></div>")
 			}
 		}
 	})
@@ -345,6 +362,7 @@ $(function(){
 	socket.on("getChatsResponse", function(friends, das){
 		currFriends = friends
 		var dasCounter = 0
+		$(".friBoxButtons2").remove()
 		render("friendsA1")
 		if (friends[0].length != 0){
 			$(".defaultText").remove()
@@ -352,20 +370,33 @@ $(function(){
 					console.log(i + 1)
 					console.log(friends[0].length)
 					if (friends[1][i] != 0){
-						$(".friContainer").append("<div class='friBox'><div class='friBoxUName'>" + friends[0][i] + "</div><div class='friBoxName'>" + friends[1][i] +"</div><div class='friButtons'><button class='friButton1' id='" + friends[0][i] + "'>Send Message</button><button class='friButton2' id='" + friends[0][i] + "'>Remove</button></div></div>")
+						$(".friContainer").append("<div class='friBox'><div class='friBoxUName'>" + friends[0][i] + "</div><div class='friBoxName'>" + friends[1][i] +"</div><div class='friButtons'><button class='friButton1' id='" + friends[0][i] + "'>Send Message</button></div></div>")
 					}else{
-						$(".friContainer").append("<div class='friBox'><img class='gIcon' src='app-assets/groupMessagesIcon.svg'></img><div class='friBoxUName'>" + friends[0][i] + "</div><div class='friBoxName'>" + friends[1][i] +"</div><div class='friButtons'><button class='friButton1g' id='" + friends[0][i] + "'>Send Message</button><button class='friButton2g' id='" + das[dasCounter] + "'>Leave</button></div></div>")
+						$(".friContainer").append("<div class='friBox'><img class='gIcon' src='app-assets/groupMessagesIcon.svg'></img><div class='friBoxUName'>" + friends[0][i] + "</div><div class='friBoxName'>" + friends[1][i] +"</div><div class='friButtons'><button class='friButton1g' id='" + friends[0][i] + "'>Send Message</button></div></div>")
 						dasCounter += 1;
 					}
 			}
 			$(".friContainer").append("<div class='friBoxButtons'><button class='friCreateGroupButton'>Create Group</button></div>")
+			$(".friContainer").append("<div class='friBoxButtons2'><button class='friLogout'>Logout</button></div>")
 		}else{
 			$(".friContainer").append("<div class='defaultText' id='a1'>Friend List Empty</div>")
+			$(".friContainer").append("<div class='friBoxButtons2l'><button class='friLogout'>Logout</button></div>")
 		}
 	})
 
 	socket.on("getChatsReload", function(){
 		socket.emit("getChats", username)
+	})
+
+	socket.on("logoutResponse", function(){
+		window.location.reload()
+	})
+
+	socket.on("removeFriendResponse", function(params){
+		fAdded = false
+		if (params){
+			render("uProfileA2")
+		}
 	})
 
 	$('body').on('input', '.searchQuery', function(){
@@ -374,6 +405,7 @@ $(function(){
 					render("sq")
 					searchShown = true
 				}
+			console.log($('.searchQuery').val())
 			socket.emit("searchQuery", $('.searchQuery').val(), username)
 		}else if (searchShown){
 			render("homeA2")
@@ -486,8 +518,8 @@ $(function(){
 
 	$('body').on('submit', '.usform', function(e){
 		e.preventDefault();
-		$(".chatContainer").append("<div class='cbum'><div class='cbur'><div class='chatBoxUser' dir='ltr'>" +  clean($(".userChatInput").val()) + "</div></div></div>")
-		socket.emit("sendMessage", chatType, clean($(".userChatInput").val()), username, currUserChat[0])
+		glOnUser = null
+		socket.emit("sendMessage", chatType, $(".userChatInput").val(), username, currUserChat[0])
 		sendTyping()
 		$('body').animate({scrollTop: $('body').get(0).scrollHeight}, 2000);
 		$(".userChatInput").val("")
@@ -505,6 +537,18 @@ $(function(){
 			privateTimer = setTimeout(sendTyping, 1000)
 	})
 	$('body').on('click', '.gcCreateButton', function(){
-		socket.emit("createGroup", createGroup, $(".gcGroupName").val())
+		socket.emit("createGroup", createGroup, $(".gcGroupName").val(), username)
+	})
+
+	$('body').on('click', '.friLogout', function(){
+		socket.emit("logoutRequest", username)
+	})
+
+	$('body').on('click', '.userClickArea', function(){
+		render("chatSettings")
+	})
+
+	$('body').on('click', '.uProfileSendMessage', function(){
+		socket.emit("removeFriend", curruProfile["username"], username)
 	})
 })

@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700,900');
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700,900');
 body{
-	overflow-x: hidden;
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
     -webkit-tap-highlight-color: transparent;
 }
@@ -73,6 +73,10 @@ body{
 	height: 30px;
 	width: 50%;
 	outline: none;
+}
+
+.topNav .searchQuery::placeholder{
+	color: rgb(200,200,200);
 }
 
 .topNav .searchQuery:focus{
@@ -225,7 +229,7 @@ body{
 	outline: none;
 	font-family: 'Roboto', sans-serif;
 	font-size: 13px;
-	color: #999999;
+	color: #fc4d94;;
 }
 
 .uProfileSendMessage:active{
@@ -327,27 +331,30 @@ body{
 	margin: 0;
 	position: relative;
 	background-color: #efefef;
-	width: 100%;
+	width: 90%;
+	border-radius: 10px;
 	height: 70px;
-	margin-bottom: 80px;
+	margin-top: 20px;
 }
 
 .friBoxUName{
-	top: 10%;
-	transform: translateY(-50%)
-	margin-top: 0px;
-	position: relative;
+	position: absolute;
+	top: 20%;
+	text-align: left;
 	font-family: 'Roboto', sans-serif;
 	font-weight: 900;
-	font-size: 30px;
+	font-size: 25px;
+	margin-left: 10%;
 }
 .friBoxName{
-	top: 10%;
-	position: relative;
+	position: absolute;
+	text-align: left;
+	top: 60%;
 	font-family: 'Roboto', sans-serif;
 	font-weight: 700;
-	font-size: 13px;
+	font-size: 12px;
 	color: grey;
+	margin-left: 10%;
 }
 .friButton1{
 	cursor: pointer;
@@ -355,32 +362,20 @@ body{
 	background-color: #efefef;
 	font-family: 'Roboto', sans-serif;
 	font-weight: 700;
-	border: none;
-	outline: none;
-	width: 70%;
-	height: 40px;
-	position: absolute;
-	left: 0%;
-	top: calc(50% - 20px);
-}
-.friButton2{
-	border-style: solid;
-	border-left-width:  1px;
-	border-right-width: 0px;
-	border-top-width: 0px;
-	border-bottom-width: 0px;
-	cursor: pointer;
-	color: #f44259;
-	background-color: #efefef;
-	font-family: 'Roboto', sans-serif;
-	font-weight: 700;
+	border: solid;
+	border-width: 0px;
+	border-left-width: 1px;
+	border-color: #e7e7e7;
 	outline: none;
 	width: 30%;
-	height: 40px;
+	height: 100%;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
 	position: absolute;
 	left: 70%;
-	top: calc(50% - 20px);
+	top: calc(0%);
 }
+
 
 .friButton1g{
 	cursor: pointer;
@@ -388,56 +383,28 @@ body{
 	background-color: #efefef;
 	font-family: 'Roboto', sans-serif;
 	font-weight: 700;
-	border: none;
-	outline: none;
-	width: 70%;
-	height: 40px;
-	position: absolute;
-	left: 0%;
-	top: calc(50% - 20px);
-}
-.friButton2g{
-	border-style: solid;
-	border-left-width:  1px;
-	border-right-width: 0px;
-	border-top-width: 0px;
-	border-bottom-width: 0px;
-	cursor: pointer;
-	color: #f44259;
-	background-color: #efefef;
-	font-family: 'Roboto', sans-serif;
-	font-weight: 700;
+	border: solid;
+	border-width: 0px;
+	border-left-width: 1px;
+	border-color: #e7e7e7;
 	outline: none;
 	width: 30%;
-	height: 40px;
+	height: 100%;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
 	position: absolute;
 	left: 70%;
-	top: calc(50% - 20px);
+	top: calc(0%);
 }
 
 
 .friButtons{
-	border: none;
-	outline: none;
-	box-shadow: .2px .2px .2px .2px #aeaeae;
-	position: relative;
-	top: 27%;
-	height: 40px;
-	width: 100%;
-	background-color: #f1f1f1;
 }
 
 .friButton1:active{
 	background-color: #e1e1e1;
 }
-.friButton2:active{
-	background-color: #e1e1e1;
-}
-
 .friButton1g:active{
-	background-color: #e1e1e1;
-}
-.friButton2g:active{
 	background-color: #e1e1e1;
 }
 
@@ -451,18 +418,47 @@ body{
 }
 
 .friBoxButtons{
-	margin-bottom: 145px;
+	margin-bottom: 20px;
 	width: 100%;
 	height: 40px;
 	background-color: #e7e7e7;
 }
 
+.friBoxButtons2{
+	margin-bottom: 155px;
+	width: 100%;
+	height: 40px;
+}
+
+.friBoxButtons2l{
+	position: absolute;
+	width: 100%;
+	height: 40px;
+	top: 45%;
+	background-color: #e7e7e7;
+}
+
 .friCreateGroupButton{
+	margin-top: 20px;
 	cursor: pointer;
 	border: none;
 	outline: none;
-	box-shadow: .1px .1px .1px .1px #aeaeae;
+	border-radius: 10px;
 	color: #62d862;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	background-color: #f1f1f1;
+	height: 40px;
+	width: 120px;
+}
+
+.friLogout{
+	margin-top: 20px;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	border-radius: 10px;
+	color: #fc4d94;
 	font-family: 'Roboto', sans-serif;
 	font-weight: 700;
 	background-color: #f1f1f1;
@@ -474,17 +470,29 @@ body{
 	background-color: #e1e1e1;
 }
 
+.friLogout:active{
+	background-color: #e1e1e1;
+}
+
 .bbc{
-	z-index: 100;
+	cursor: pointer;
+	background-color: transparent;
+	border-radius: 10px;
+	z-index: 101;
 	width: 40px;
 	height: 40px;
 	position: absolute;
-	top: 30%;
+	top: 25%;
 	left: 7%;
 }
 
 .bbc:active{
-	filter:brightness(300%);
+	background-color: #e1e1e1;
+}
+.uCBA{
+	position: absolute;
+	top: 14%;
+	left: 15%;
 }
 
 .userChatTopNav{
@@ -495,6 +503,23 @@ body{
 	width: 100%;
 	height: 70px;
 }
+
+
+.userClickArea{
+	cursor: pointer;
+	position: fixed;
+	z-index: 100;
+	box-shadow: .1px .1px .1px .1px grey;
+	background-color: #efefef;
+	width: 100%;
+	height: 70px;
+}
+
+.userClickArea:active{
+	background-color: #e1e1e1;
+}
+
+
 
 .userChatUName{
 	top: 10%;
@@ -517,7 +542,7 @@ body{
 .userChatBottomNav{
 	position: fixed;
 	z-index: 99;
-	box-shadow: 3px 3px 3px 3px grey;
+	box-shadow: 1px 1px 1px 1px grey;
 	position: fixed;
 	top: calc(100% - 70px);
 	width: 100%;
@@ -542,8 +567,6 @@ body{
 }
 
 .chatContainer{
-	left: 12%;
-	padding: 0px;
 	width: 100%;
 	position: absolute;
 	margin-top: 90px;
@@ -559,8 +582,8 @@ body{
 }
 
 .cbour{
+	margin-left: 10%;
 	margin-bottom: 10px;
-	max-width: 75%;
 	width: auto;
 }
 
@@ -573,14 +596,14 @@ body{
 }
 
 .cbur{
+	margin-right: 10%;
+	left: 100%;
 	margin-bottom: 10px;
 	direction: rtl;
-	max-width: 75%;
 	width: auto;
 }
 
 .chatBoxOtherUser{
-	line-height: 10px;
 	white-space: normal;
 	position: relative;
 	border-radius: 5px;
@@ -589,7 +612,21 @@ body{
 	word-wrap: break-word;
 	font-family: 'Roboto', sans-serif;
 	background-color: #dedede;
-	max-width: 75%;
+	max-width: 60%;
+	text-align: left;
+	padding: 10px 10px 10px 10px;
+}
+
+.chatBoxOtherUser2{
+	line-height: 5px;
+	position: relative;
+	border-radius: 5px;
+	left: 0%;
+	display:inline-block;
+	word-wrap: break-word;
+	font-family: 'Roboto', sans-serif;
+	background-color: #dedede;
+	max-width: 60%;
 	text-align: left;
 	padding: 10px 10px 10px 10px;
 }
@@ -603,11 +640,11 @@ body{
 
 .chatBoxOUContent{
 	line-height: normal;
-	margin-top: -8px;
+	margin-top: 0px;
 }
 
 .chatBoxOUContent2{
-	line-height: normal;
+	line-height: 10px;
 	margin-top: 0px;
 }
 
@@ -620,16 +657,17 @@ body{
 	word-wrap: break-word;
 	font-family: 'Roboto', sans-serif;
 	background-color: #62d862;
-	max-width: 75%;
+	max-width: 60%;
 	text-align: left;
 	padding: 10px 10px 10px 10px;
 }
 
 .typingEvent{
-	z-index: 100;
+	position: relative;
 }
 
 .chatBoxUserTypingText{
+	z-index: 103;
 	font-family: 'Roboto', sans-serif;
 	font-size: 13px;
 	font-weight: 700;
@@ -716,7 +754,6 @@ body{
 }
 
 .gcFriendBox{
-	padding-left: 10%;
 	width: 100%;
 	height: 80px;
 	box-shadow: .2px .2px .1px .1px grey;
@@ -724,6 +761,7 @@ body{
 }
 
 .gcBoxUName{
+	margin-left: 10%;
 	position: relative;
 	top: 25%;
 	font-family: 'Roboto', sans-serif;
@@ -733,6 +771,7 @@ body{
 }
 
 .gcBoxName{
+	margin-left: 10%;
 	color: grey;
 	position: relative;
 	top: 25%;
@@ -790,7 +829,11 @@ body{
 	position: absolute;
 	width: 25px;
 	height: 25px;
-	left: 90%;
+	left: calc(70% - 30px);
 	top: 10%;
 }
 
+.friButtons2l{
+	position: absolute;
+	top: 50%;
+}
