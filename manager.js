@@ -1,4 +1,4 @@
-var socket = io.connect("https://192.168.1.71:3000")
+var socket = io.connect("https://81db68b4.ngrok.io/")
 //Add s
 indexPage = false
 fAdded = false
