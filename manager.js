@@ -1,8 +1,8 @@
-var socket = io.connect("https://81db68b4.ngrok.io/")
-//Add s
+var socket = io.connect("https://54e13630.ngrok.io")
 indexPage = false
 fAdded = false
 username = null
+fullname = null
 page = "home"
 privateTimer = null
 curruProfile = null
@@ -11,7 +11,7 @@ currFriends = null
 currUserChat = null
 currUserChatHistory = null
 privateIsTyping = false
-createGroup = []
+createGroup = [[],[]]
 chatType = 1
 currUserData = null
 glChatId = null
@@ -26,6 +26,10 @@ function sendTyping(){
 	privateIsTyping = false;
 	console.log("typingEventFalse")
 	socket.emit("typingEvent", privateIsTyping, username, glChatId)
+}
+
+function scrollTopPls(){
+	window.scrollTo(0,0)
 }
 
 function remove(){
@@ -158,6 +162,7 @@ function render(page){
 		$(".bottomNav").remove()
 		$(".friContainer").remove()
 		$(".gc").remove()
+		$(".gs").remove()
 		$(".topNav").remove()
 		$("center").append("<div class='userChatTopNav'><div class='bbc'><img class='uCBA' src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='userClickArea'><div class='userChatUName'>" + currUserChat[0] + "</div><div class='userChatName'>" + currUserChat[1] + "</div></div></div>")
 		$("body").append("<div class='chatContainer'></div>")
@@ -165,17 +170,28 @@ function render(page){
 	}else if(page == "groupCreate"){
 		page = "groupCreate"
 		socket.emit("changePage", page, username)
-		createGroup = [username]
+		createGroup = [[username], [fullname]]
 		$(".gc").remove()
 		$(".bottomNav").remove()
 		$(".friContainer").remove()
 		$(".topNav").remove()
-		$("center").append("<div class='gc'><div class='gcTopNav'><div class='bbc'><img src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='gcTitle'>Create Group</div></div><div class='gcInputDiv'><div class='gcTitle2'>Choose a name</div><input class='gcGroupName' placeholder='Desired Group Name'></input></div></button><div class='gcTitle3'>Add Friends</div><div class='gcContainer'></div><button class='gcCreateButton'>Create</div>")
+		$("center").append("<div class='gc'><div class='gcTopNav'><div class='bbc'><img src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='gcTitle'>Create Group</div></div><div class='gcInputDiv'><div class='gcTitle2'>Choose a name</div><input class='gcGroupName' placeholder='Desired Group Name'></input></div></button><div class='gcTitle3'>Add Friends</div><div class='gcContainer'></div><button class='gcCreateButton'>Create</button></div>")
 	}else if(page =="chatSettings"){
+		page = "chatSettings"
 		if (chatType == 1){
 			socket.emit("getUserProfile", currUserChat[0], username)
-		}else{
+		}else if(chatType ==2){
+			page = "groupSettings"
+			socket.emit("groupSettings", glChatId)
 		}
+
+	}else if(page == "chatSettingsA2"){
+		$(".userChatBottomNav").remove()
+		$(".chatContainer").remove()
+		$(".userChatUName").text("Group Settings")
+		$(".userChatName").text(currUserChat[0])
+		$("center").append("<div class='gs'><div class='gsTitle'>Group members</div><div class='gsContainer'></div><button class='gsAddMembers'>Add Members</button><button class='gsLeaveGroup'>Leave Group</button></div>")
+
 	}
 }
 $(function(){
@@ -184,6 +200,7 @@ $(function(){
 	socket.on("loginResponse", function(params, payload){
 			if (params === true){
 				username = payload[0]
+				fullname = payload[2]
 				render(page)
 			}else{
 				localStorage.removeItem("sessionKey")
@@ -308,6 +325,10 @@ $(function(){
 		socket.emit("connectToUser", false, name, username)
 	})
 
+	socket.on("groupSettingsResponse", function(data){
+		render("chatSettingsA2")
+	});
+
 	socket.on("getUserProfileResponse", function(payload, posts, fad){
 			fAdded = fad
 			console.log(JSON.stringify(payload))
@@ -371,9 +392,9 @@ $(function(){
 					console.log(i + 1)
 					console.log(friends[0].length)
 					if (friends[1][i] != 0){
-						$(".friContainer").append("<div class='friBox'><div class='friBoxUName'>" + friends[0][i] + "</div><div class='friBoxName'>" + friends[1][i] +"</div><div class='friButtons'><button class='friButton1' id='" + friends[0][i] + "'>Send Message</button></div></div>")
+						$(".friContainer").append("<div class='friBox'><div class='friBoxUName'>" + friends[0][i] + "</div><div class='friBoxName'>" + friends[1][i] +"</div><div class='friButtons'><button class='friButton1' id='" + friends[2][i] + "'>Send Message</button></div></div>")
 					}else{
-						$(".friContainer").append("<div class='friBox'><img class='gIcon' src='app-assets/groupMessagesIcon.svg'></img><div class='friBoxUName'>" + friends[0][i] + "</div><div class='friBoxName'>" + friends[1][i] +"</div><div class='friButtons'><button class='friButton1g' id='" + friends[0][i] + "'>Send Message</button></div></div>")
+						$(".friContainer").append("<div class='friBox'><img class='gIcon' src='app-assets/groupMessagesIcon.svg'></img><div class='friBoxUName'>" + friends[0][i] + "</div><div class='friBoxName'>" + friends[1][i] +"</div><div class='friButtons'><button class='friButton1g' id='" + friends[2][i] + "'>Send Message</button></div></div>")
 						dasCounter += 1;
 					}
 			}
@@ -419,8 +440,15 @@ $(function(){
 		searchShown = false
 	});
 	$('body').on('click', '.bbc', function(){
-		socket.emit("disconnectFromChat", username)
-		socket.emit("getChats", username)
+		if (page == "userChat"){
+			socket.emit("disconnectFromChat", username)
+			socket.emit("getChats", username)
+		}else if (page == "chatSettings"){
+			socket.emit("connectToUser", false, chid, username)
+		}else{
+			socket.emit("disconnectFromChat", username)
+			socket.emit("getChats", username)
+		}
 	});
 	$('body').on('click', '#friends', function(){
 		if (!(page === "friends")){
@@ -467,13 +495,13 @@ $(function(){
 		}
 	})
 	$('body').on('click', ".friButton1", function(){
-		var user = $(this).attr("id")
-		socket.emit("connectToUser", true, user, username)
+		var chid = $(this).attr("id")
+		socket.emit("connectToUser", true, chid, username)
 	});
 
 	$('body').on('click', ".friButton1g", function(){
-		var user = $(this).attr("id")
-		socket.emit("connectToUser", false, user, username)
+		var chid = $(this).attr("id")
+		socket.emit("connectToUser", false, chid, username)
 	});
 
 	$('body').on('click', ".friButton2g", function(){
@@ -507,12 +535,14 @@ $(function(){
 
 	$("body").on('click', '.gcSelector', function(){
 		$(this).attr("class", 'gcSelector2')
-		createGroup.push($(this).prev().prev().text())
+		createGroup[0].push($(this).prev().prev().text())
+		createGroup[1].push($(this).prev().text())
 		console.log(createGroup)
 	});
 
 	$("body").on('click', '.gcSelector2', function(){
-		createGroup.splice(createGroup.indexOf($(this).prev().prev().text()), 1)
+		createGroup[0].splice(createGroup[0].indexOf($(this).prev().prev().text()), 1)
+		createGroup[1].splice(createGroup[1].indexOf($(this).prev().text()), 1)
 		$(this).attr("class", 'gcSelector')
 		console.log(createGroup)
 	});
@@ -551,5 +581,7 @@ $(function(){
 
 	$('body').on('click', '.uProfileSendMessage', function(){
 		socket.emit("removeFriend", curruProfile["username"], username)
+	})
+	$('body').on('click', function(){
 	})
 })
