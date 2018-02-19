@@ -1,4 +1,5 @@
-var socket = io.connect("http://192.168.1.71:3000")
+var socket = io.connect("https://192.168.1.71:3000")
+//Add s
 indexPage = false
 fAdded = false
 username = null
