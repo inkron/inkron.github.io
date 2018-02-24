@@ -421,7 +421,7 @@ body{
 	margin-bottom: 20px;
 	width: 100%;
 	height: 40px;
-	background-color: #e7e7e7;
+	background-color: transparent;
 }
 
 .friBoxButtons2{
@@ -435,7 +435,7 @@ body{
 	width: 100%;
 	height: 40px;
 	top: 45%;
-	background-color: #e7e7e7;
+	background-color: transparent;
 }
 
 .friCreateGroupButton{
@@ -494,6 +494,8 @@ body{
 	top: 14%;
 	left: 15%;
 }
+
+
 
 .userChatTopNav{
 	position: fixed;
@@ -565,6 +567,7 @@ body{
 	width: 50%;
 	outline: none;
 }
+
 
 .chatContainer{
 	width: 100%;
@@ -836,4 +839,176 @@ body{
 .friButtons2l{
 	position: absolute;
 	top: 50%;
+}
+.gsTopNav{
+	position: fixed;
+	top: 0%;
+	z-index: 100;
+	box-shadow: .1px .1px .1px .1px grey;
+	background-color: #efefef;
+	width: 100%;
+	height: 70px;
+}
+
+.gsTitle{
+	top: 20%;
+	transform: translateY(-50%)
+	margin-top: 0px;
+	position: relative;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900;
+	font-size: 30px;
+}
+
+.gsTitle2{
+	background-color: #efefef;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-align: center;
+	width: 90%;
+	border-radius: 10px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900;
+	font-size: 25px;
+	margin-top: 100px;
+}
+
+.gsContainer{
+}
+
+.gsFriendBox{
+	width: 90%;
+	margin-top: 10px;
+	height: 80px;
+	background-color: #efefef;
+	border-radius: 10px;
+}
+
+.gsBoxUName{
+	margin-top: 10px;
+	position: absolute;
+	margin-left: 5%;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900;
+	font-size: 25px;
+}
+
+.gsBoxName1{
+
+	color: grey;
+	margin-top: 40px;
+	position: absolute;
+	margin-left: 5%;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	font-size: 13px;
+	word-wrap: break-word;
+	background-color: rgb(231,231,231);
+	padding: 4px;
+	border-radius: 4px;
+}
+
+.gsBoxName2{
+
+	color: #4286f4;
+	margin-top: 40px;
+	position: absolute;
+	margin-left: 5%;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	font-size: 13px;
+	word-wrap: break-word;
+	background-color: rgb(231,231,231);
+	padding: 4px;
+	border-radius: 4px;
+}
+
+.gsFriendBox .gsSelector1{
+	outline: none;
+	cursor: pointer;
+	float: right;
+	height: 100%;
+	width: 20%;
+	border: none;
+	border-style: solid;
+	border-left-width: 1px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-top-width: 0px;
+	border-color: rgb(231,231,231);
+	border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+	background-color: #efefef;
+	color: #fc4d94;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	font-size: 13px;
+
+}
+
+.gsFriendBox .gsSelector2{
+	outline: none;
+	cursor: pointer;
+	float: right;
+	height: 100%;
+	width: 20%;
+	border: none;
+	border-style: solid;
+	border-left-width: 1px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-top-width: 0px;
+	border-color: rgb(231,231,231);
+	background-color: #efefef;
+	color: #62d862;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	font-size: 13px;
+}
+
+.gsSelector1:active{
+	background-color: #e1e1e1;
+}
+
+.gsSelector2:active{
+	background-color: #e1e1e1;
+}
+
+.gsb{
+	width: 100%;
+	margin-top: 10px;
+}
+
+.gsAddMembers{
+	margin-top: 20px;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	border-radius: 10px;
+	color: #62d862;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	background-color: #f1f1f1;
+	height: 40px;
+	width: 120px;
+}
+
+.gsLeaveGroup{
+	cursor: pointer;
+	border: none;
+	outline: none;
+	border-radius: 10px;
+	color: #fc4d94;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	background-color: #f1f1f1;
+	height: 40px;
+	width: 120px;
+}
+
+.gsAddMembers:active{
+	background-color: #e1e1e1;
+}
+.gsLeaveGroup:active{
+	background-color: #e1e1e1;
 }
