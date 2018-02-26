@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,700,900');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700,900');
 body{
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
     -webkit-tap-highlight-color: transparent;
@@ -614,6 +614,7 @@ body{
 	display:inline-block;
 	word-wrap: break-word;
 	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
 	background-color: #dedede;
 	max-width: 60%;
 	text-align: left;
@@ -628,6 +629,7 @@ body{
 	display:inline-block;
 	word-wrap: break-word;
 	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
 	background-color: #dedede;
 	max-width: 60%;
 	text-align: left;
@@ -647,7 +649,7 @@ body{
 }
 
 .chatBoxOUContent2{
-	line-height: 10px;
+	line-height: normal;
 	margin-top: 0px;
 }
 
@@ -900,7 +902,7 @@ body{
 	position: absolute;
 	margin-left: 5%;
 	font-family: 'Roboto', sans-serif;
-	font-weight: 500;
+	font-weight: 700;
 	font-size: 13px;
 	word-wrap: break-word;
 	background-color: rgb(231,231,231);
@@ -915,7 +917,7 @@ body{
 	position: absolute;
 	margin-left: 5%;
 	font-family: 'Roboto', sans-serif;
-	font-weight: 500;
+	font-weight: 700;
 	font-size: 13px;
 	word-wrap: break-word;
 	background-color: rgb(231,231,231);
@@ -941,7 +943,7 @@ body{
 	background-color: #efefef;
 	color: #fc4d94;
 	font-family: 'Roboto', sans-serif;
-	font-weight: 500;
+	font-weight: 700;
 	font-size: 13px;
 
 }
@@ -962,8 +964,31 @@ body{
 	background-color: #efefef;
 	color: #62d862;
 	font-family: 'Roboto', sans-serif;
-	font-weight: 500;
+	font-weight: 700;
 	font-size: 13px;
+}
+
+.gsFriendBox .gsSelector3{
+	outline: none;
+	cursor: pointer;
+	float: right;
+	height: 100%;
+	width: 20%;
+	border: none;
+	border-style: solid;
+	border-left-width: 1px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-top-width: 0px;
+	border-color: rgb(231,231,231);
+	border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+	background-color: #efefef;
+	color: #fc4d94;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 13px;
+
 }
 
 .gsSelector1:active{
@@ -971,6 +996,10 @@ body{
 }
 
 .gsSelector2:active{
+	background-color: #e1e1e1;
+}
+
+.gsSelector3:active{
 	background-color: #e1e1e1;
 }
 
@@ -1011,4 +1040,111 @@ body{
 }
 .gsLeaveGroup:active{
 	background-color: #e1e1e1;
+}
+
+.fgsTopNav{
+	position: fixed;
+	top: 0%;
+	z-index: 100;
+	box-shadow: .1px .1px .1px .1px grey;
+	background-color: #efefef;
+	width: 100%;
+	height: 70px;
+}
+
+.fgsTitle{
+	top: 20%;
+	transform: translateY(-50%)
+	margin-top: 0px;
+	position: relative;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900;
+	font-size: 30px;
+}
+
+.fgsTitle2{
+	background-color: #efefef;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-align: center;
+	width: 90%;
+	border-radius: 10px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900;
+	font-size: 25px;
+	margin-top: 100px;
+}
+
+.fgsAddMembers{
+	margin-top: 20px;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	border-radius: 10px;
+	color: #62d862;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	background-color: #f1f1f1;
+	height: 40px;
+	width: 120px;
+}
+
+.fgsAddMembers:active{
+	background-color: #e1e1e1;
+}
+
+.fgsFriendBox{
+	width: 90%;
+	margin-top: 10px;
+	height: 80px;
+	background-color: #efefef;
+	border-radius: 10px;
+}
+
+.fgsBoxUName{
+	margin-top: 18px;
+	position: absolute;
+	margin-left: 5%;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900;
+	font-size: 25px;
+}
+
+.fgsBoxName{
+	color: grey;
+	margin-top: 45px;
+	position: absolute;
+	margin-left: 5%;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	font-size: 13px;
+	word-wrap: break-word;
+	border-radius: 4px;
+}
+
+.fgsSelector{
+	outline: none;
+	border: none;
+	cursor: pointer;
+	position: relative;
+	background-color: rgb(225,225,225);
+	top: calc(50% - 20px);
+	left: 30%;
+	width: 40px;
+	height: 40px;
+	border-radius: 10px;
+
+}
+
+.fgsSelector2{
+	outline: none;
+	border: none;
+	cursor: pointer;
+	position: relative;
+	top: calc(50% - 20px);
+	left: 30%;
+	width: 40px;
+	height: 40px;
+	border-radius: 10px;
+	background-color: #62d862;
 }
