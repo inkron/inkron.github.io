@@ -1,4 +1,4 @@
-var socket = io.connect("https://8150f105.ngrok.io")
+var socket = io.connect("https://1147a391.ngrok.io")
 indexPage = false
 fAdded = false
 username = null
@@ -12,6 +12,7 @@ currUserChat = null
 currUserChatHistory = null
 privateIsTyping = false
 createGroup = [[],[]]
+addToGroup = [[], []]
 chatType = 1
 currUserData = null
 glChatId = null
@@ -33,7 +34,7 @@ function scrollTopPls(){
 }
 
 function removeAssets(exceptions){
-	var assets = [".gc", ".friContainer", ".chatContainer", ".userChatGlobal", ".gs", ".defaultText", ".uProfileBox", ".loginBox", ".sq", ".bottomNav", ".notContainer", ".topNav", ".defaultText"]
+	var assets = [".fgs", ".gc", ".friContainer", ".chatContainer", ".userChatGlobal", ".gs", ".defaultText", ".uProfileBox", ".loginBox", ".sq", ".bottomNav", ".notContainer", ".topNav", ".defaultText"]
 	for (var i in assets){
 		if (!(exceptions.includes(assets[i]))){
 			$(assets[i]).remove() 
@@ -45,11 +46,56 @@ function checkForSpace(){
 
 }
 
+function renderFGS(data){
+	if (data[0].length != 0){
+			render("friendsFGSA1")
+			for (var i in data[0]){
+				$(".fgsContainer").append("<div class='fgsFriendBox'><div class='fgsBoxUName'>" + data[0][i] + "</div><div class='fgsBoxName'>" + data[1][i] + "</div><button class='fgsSelector'></button></div>")
+
+			}
+		}else{
+			render("friendsFGSA2")
+			$(".fgsContainer").append("<div class='defaultText' id='a1'>Friend List Empty</div>")
+		}
+}
+
+function renderGroupSettings(data){
+	console.log(data)
+		render("chatSettingsA2")
+		for (var i in data[0]){
+				if (!(data[0][i] == username)){
+					if (data[1][data[0].indexOf(username)] == "admin"){
+						if (data[1][i] == "admin"){
+						$(".gsContainer").append("<div class='gsFriendBox'><div class='gsBoxUName'>" + data[0][i] + "</div><div class='gsBoxName2'>" + data[1][i] + "</div><button class='gsSelector1'>Kick</button><button class='gsSelector3'>Demote</button></div>")
+
+						}else{
+							$(".gsContainer").append("<div class='gsFriendBox'><div class='gsBoxUName'>" + data[0][i] + "</div><div class='gsBoxName1'>" + data[1][i] + "</div><button class='gsSelector1'>Kick</button><button class='gsSelector2'>Promote</button></div>")
+						}
+					}else{
+						if (data[1][i] == "admin"){
+						$(".gsContainer").append("<div class='gsFriendBox'><div class='gsBoxUName'>" + data[0][i] + "</div><div class='gsBoxName2'>" + data[1][i] + "</div></div>")
+
+						}else{
+							$(".gsContainer").append("<div class='gsFriendBox'><div class='gsBoxUName'>" + data[0][i] + "</div><div class='gsBoxName1'>" + data[1][i] + "</div></div>")
+						}
+
+					}
+				}else{
+					if (data[1][i] == "admin"){
+						$(".gsContainer").append("<div class='gsFriendBox'><div class='gsBoxUName'>You</div><div class='gsBoxName2'>" + data[1][i] + "</div></div>")
+				}else{
+						$(".gsContainer").append("<div class='gsFriendBox'><div class='gsBoxUName'>You</div><div class='gsBoxName1'>" + data[1][i] + "</div></div>")
+				}
+
+				}
+		}
+}
+
 function render(pageRequest){
 	$('body').scrollTop(0)
 	if (pageRequest === "homeA1"){
 		page = "home"
-		socket.emit("changePage", page, username)
+		socket.emit("changePage", page, username, null)
 		removeAssets([])
 		$(".him").attr("src", "app-assets/homeS.svg")
 		$("body").css("background-color", "#e7e7e7");
@@ -62,7 +108,7 @@ function render(pageRequest){
 		$(".fim").attr("src", "app-assets/userN.svg")
 	}else if(pageRequest === "homeA2"){
 		page = "home"
-		socket.emit("changePage", page, username)
+		socket.emit("changePage", page, username, null)
 		removeAssets(['.topNav', '.bottomNav'])
 		$("body").css("background-color", "#e7e7e7");
 		$("center").append("<div class='bottomNav'><div class='bnButton' id='friends'><img class='fim' id='Image' src='app-assets/userN.svg'></img></div><div class='bnButton' id='home'><img class='him' id='Image' src='app-assets/homeN.svg'></img></div><div class='bnButton' id='mail'><img class='bim' id='Image' src='app-assets/bellN.svg'></img></div></div>")
@@ -72,7 +118,7 @@ function render(pageRequest){
 		$(".fim").attr("src", "app-assets/userN.svg")
 	}else if(pageRequest === "sq"){
 		page = "sq"
-		socket.emit("changePage", page, username)
+		socket.emit("changePage", page, username, null)
 		removeAssets([".topNav"])
 		$("body").css("background-color", "#e7e7e7");
 		$("center").append("<div class='sq'><div class='sqContainer'></div></div>")
@@ -80,8 +126,8 @@ function render(pageRequest){
 		$(".sq").append('<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>')
 	}else if(pageRequest == ("friendsA1")){
 		page = "friends"
-		socket.emit("changePage", page, username)
-		removeAssets([".bottomNav"])
+		socket.emit("changePage", page, username, glChatId)
+		removeAssets([])
 		$("center").append("<div class='bottomNav'><div class='bnButton' id='friends'><img class='fim' id='Image' src='app-assets/userN.svg'></img></div><div class='bnButton' id='home'><img class='him' id='Image' src='app-assets/homeN.svg'></img></div><div class='bnButton' id='mail'><img class='bim' id='Image' src='app-assets/bellN.svg'></img></div></div>")
 		$("center").append("<div class='friContainer'></div>")
 		$(".him").attr("src", "app-assets/homeN.svg")
@@ -90,7 +136,7 @@ function render(pageRequest){
 	}else if(pageRequest == ("mailA1")){
 		removeAssets([".bottomNav"])
 		page = "mail"
-		socket.emit("changePage", page, username)
+		socket.emit("changePage", page, username, null)
 		$("center").append("<div class='notContainer'></div>")
 		$(".him").attr("src", "app-assets/homeN.svg")
 		$(".bim").attr("src", "app-assets/bellS.svg")
@@ -98,7 +144,7 @@ function render(pageRequest){
 	}else if(pageRequest == "uProfileA2"){
 		removeAssets([])
 		page = "uProfile"
-		socket.emit("changePage", page, username)
+		socket.emit("changePage", page, username, null)
 		if (!(fAdded)){
 				$("center").append("<div class='uProfileBox'><div class='uProfileMove'><div class='uProfileUsername'>" + curruProfile["username"] + "</div><div class='uProfileName'>" + curruProfile["name"] + "</div><button class='uProfileAddFriend'>Add Friend</button></div></div>")
 		}else{
@@ -109,29 +155,44 @@ function render(pageRequest){
 	}else if(pageRequest == "userChat"){
 		removeAssets([])
 		page = "userChat"
-		socket.emit("changePage", page, username)
+		socket.emit("changePage", page, username, glChatId)
 		$("center").append("<div class='userChatGlobal'></div>")
 		$(".userChatGlobal").append("<div class='userChatTopNav'><div class='bbc'><img class='uCBA' src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='userClickArea'><div class='userChatUName'>" + currUserChat[0] + "</div><div class='userChatName'>" + currUserChat[1] + "</div></div></div>")
 		$("body").append("<div class='chatContainer'></div>")
 		$(".userChatGlobal").append("<div class='userChatBottomNav'><form class='usform'><input class='userChatInput'></input></div></div>")
 	}else if(pageRequest == "groupCreate"){
 		page = "groupCreate"
-		socket.emit("changePage", page, username)
+		socket.emit("changePage", page, username, null)
 		createGroup = [[username], [fullname]]
 		removeAssets([])
 		$("center").append("<div class='gc'><div class='gcTopNav'><div class='bbc'><img class='uCBA' src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='gcTitle'>Create Group</div></div><div class='gcInputDiv'><div class='gcTitle2'>Choose a name</div><input class='gcGroupName' placeholder='Desired Group Name'></input></div></button><div class='gcTitle3'>Add Friends</div><div class='gcContainer'></div><button class='gcCreateButton'>Create</button></div>")
 	}else if(pageRequest =="chatSettings"){
 		page = "chatSettings"
 		if (chatType == 1){
+			socket.emit("changePage", page, username, null)
 			socket.emit("getUserProfile", currUserChat[0], username)
 		}else if(chatType ==2){
 			page = "groupSettings"
+			socket.emit("changePage", page, username, glChatId)
 			socket.emit("groupSettings", glChatId)
 		}
 
 	}else if(pageRequest == "chatSettingsA2"){
+		page = "groupSettings"
 		removeAssets([])
-		$("center").append("<div class='gs'><div class='gsTopNav'><div class='bbc'><img class='uCBA' src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='gsTitle'>Group Settings</div></div><div class='gsTitle2'>Members</div><div class='gsContainer'></div><div class='gsb'><button class='gsAddMembers'>Add Members</button></div><div class='gsb'><button class='gsLeaveGroup'>Leave Group</button></div></div>")
+		$("center").append("<div class='gs'><div class='gsTopNav'><div class='bbc'><img class='uCBA' src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='gsTitle'>Group Settings</div></div><div class='gsTitle2'>Member List</div><div class='gsContainer'></div><div class='gsb'><button class='gsAddMembers'>Add Members</button></div><div class='gsb'><button class='gsLeaveGroup'>Leave Group</button></div></div>")
+
+	}else if(pageRequest == "friendsFGSA1"){
+		addToGroup = [[],[]]
+		page = "friendsFGS"
+		removeAssets([])
+		socket.emit("changePage", "friends", username, glChatId)
+		$("center").append("<div class='fgs'><div class='fgsTopNav'><div class='bbc'><img class='uCBA' src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='fgsTitle'>Group Settings</div></div><div class='fgsTitle2'>Friends</div><div class='fgsContainer'></div><div class='gsb'><button class='fgsAddMembers'>Add Members</button></div>")
+	}else if(pageRequest == "friendsFGSA2"){
+		page = "friendsFGS"
+		removeAssets([])
+		socket.emit("changePage", "friends", username, glChatId)
+		$("center").append("<div class='fgs'><div class='fgsTopNav'><div class='bbc'><img class='uCBA' src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='fgsTitle'>Add Members</div></div><div class='fgsContainer'></div></div>")
 
 	}
 }
@@ -237,8 +298,20 @@ $(function(){
 		}
 	})
 
-	socket.on("updateUserData", function(data){
+	socket.on("updateUserData", function(data, user){
 		currUserData = data;
+		if (page == "userChat"){
+			if (chatType == 2){
+				$(".userChatName").text(data[0])
+			}
+		}else if(page =="groupSettings"){
+			renderGroupSettings(data)
+		}else if (page =="friendsFGS"){
+			socket.emit("getFriendsFGS", username, glChatId)
+		}
+		if (user == username){
+			socket.emit("getChats", username)
+		}
 	})
 
 	socket.on("getNotificationsResponse", function(notifications){
@@ -267,26 +340,7 @@ $(function(){
 	})
 
 	socket.on("groupSettingsResponse", function(data){
-		render("chatSettingsA2")
-		for (var i in data[0]){
-			if (data[1][data[0].indexOf(username)] == "admin"){
-				if (!(data[0][i] == username)){
-					if (data[1][i] == "admin"){
-					$(".gsContainer").append("<div class='gsFriendBox'><div class='gsBoxUName'>" + data[0][i] + "</div><div class='gsBoxName2'>" + data[1][i] + "</div><button class='gsSelector1'>Kick</button><button class='gsSelector1'>Demote</button></div>")
-
-					}else{
-						$(".gsContainer").append("<div class='gsFriendBox'><div class='gsBoxUName'>" + data[0][i] + "</div><div class='gsBoxName1'>" + data[1][i] + "</div><button class='gsSelector1'>Kick</button><button class='gsSelector2'>Promote</button></div>")
-					}
-				}else{
-					if (data[1][i] == "admin"){
-						$(".gsContainer").append("<div class='gsFriendBox'><div class='gsBoxUName'>" + data[0][i] + "</div><div class='gsBoxName2'>" + data[1][i] + "</div></div>")
-				}else{
-						$(".gsContainer").append("<div class='gsFriendBox'><div class='gsBoxUName'>" + data[0][i] + "</div><div class='gsBoxName1'>" + data[1][i] + "</div></div>")
-				}
-
-				}
-			}
-		}
+		renderGroupSettings(data)
 	});
 
 	socket.on("getUserProfileResponse", function(payload, posts, fad){
@@ -309,6 +363,10 @@ $(function(){
 			}
 		}
 
+	})
+
+	socket.on('getFriendsFGSResponse', function(data){
+		renderFGS(data)
 	})
 
 	socket.on("typingEventResponse", function(event, user){
@@ -367,7 +425,11 @@ $(function(){
 	})
 
 	socket.on("getChatsReload", function(){
-		socket.emit("getChats", username)
+		if (page != "friendsFGS"){
+			socket.emit("getChats", username)
+		}else{
+			socket.emit("getFriendsFGS", username, glChatId)
+		}
 	})
 
 	socket.on("logoutResponse", function(){
@@ -379,6 +441,22 @@ $(function(){
 		if (params){
 			render("uProfileA2")
 		}
+	})
+
+	$('body').on('click', ".gsAddMembers", function(){
+		socket.emit("getFriendsFGS", username, glChatId)
+	})
+
+	$('body').on('click', '.gsSelector1', function(){
+		socket.emit("removeFromGroup", $(this).prev().prev().text(), glChatId)
+	})
+
+	$('body').on('click', '.gsSelector2', function(){
+		socket.emit("changeRankGroup", $(this).prev().prev().prev().text(), glChatId)
+	})
+
+	$('body').on('click', '.gsSelector3', function(){
+		socket.emit("changeRankGroup", $(this).prev().prev().prev().text(), glChatId)
 	})
 
 	$('body').on('input', '.searchQuery', function(){
@@ -406,6 +484,8 @@ $(function(){
 			socket.emit("getChats", username)
 		}else if (page == "groupSettings"){
 			socket.emit("connectToUser", false, glChatId, username)
+		}else if(page == "friendsFGS") {
+			renderGroupSettings(currUserData)
 		}else{
 			socket.emit("disconnectFromChat", username)
 			socket.emit("getChats", username)
@@ -490,6 +570,15 @@ $(function(){
 		}
 	});
 
+	$('body').on('click', '.gsLeaveGroup', function(){
+		socket.emit('removeFromGroup', username, glChatId)
+		socket.emit("getChats", username)
+	})
+
+	$('body').on('click', '.fgsAddMembers', function(){
+		socket.emit('addMembersGroup', addToGroup, glChatId, currUserChat[0])
+	})
+
 	$("body").on('click', '.friCreateGroupButton', function(){
 		socket.emit("getFriendsFNG", username)
 	})
@@ -506,6 +595,20 @@ $(function(){
 		createGroup[1].splice(createGroup[1].indexOf($(this).prev().text()), 1)
 		$(this).attr("class", 'gcSelector')
 		console.log(createGroup)
+	});
+
+	$("body").on('click', '.fgsSelector', function(){
+		$(this).attr("class", 'fgsSelector2')
+		addToGroup[0].push($(this).prev().prev().text())
+		addToGroup[1].push($(this).prev().text())
+		console.log(addToGroup)
+	});
+
+	$("body").on('click', '.fgsSelector2', function(){
+		addToGroup[0].splice(addToGroup[0].indexOf($(this).prev().prev().text()), 1)
+		addToGroup[1].splice(addToGroup[1].indexOf($(this).prev().text()), 1)
+		$(this).attr("class", 'fgsSelector')
+		console.log(addToGroup)
 	});
 
 
