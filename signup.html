@@ -3,6 +3,7 @@
 		<meta http-equiv="Content-Security-Policy" content="default-src *; script-src * 'unsafe-inline'; object-src *; img-src *; media-src *; frame-src *; font-src *; connect-src * ">
 		<meta http-equiv="X-Content-Security-Policy" content="default-src *; script-src * 'unsafe-inline'; object-src *; img-src *; media-src *; frame-src *; font-src *; connect-src *">
 		<meta http-equiv="X-WebKit-CSP" content="default-src *; script-src * 'unsafe-inline'; object-src *; img-src *; media-src *; frame-src *; font-src *; connect-src *">
+		<script src="fastclick.js"></script>
 		<link rel="stylesheet" type="text/css" href="signup-files/style.css">
 		<link rel="stylesheet" type="text/css" href="universal.css">
 		<script src="socket.io.js"></script>
@@ -31,7 +32,7 @@
     				return !!password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%* #+=\(\)\^?&]{7,}$/);
 				};
 			$(function(){
-					var errortextPresent = false;
+					FastClick.attach(document.body);
 					$(".button").click(function(){
 						if ($("#email").val().length != 0 && $("#fullname").val().length != 0 && $("#username").val().length != 0 && $("#password").val().length != 0){
 							if (validateEmail($("#email").val())){

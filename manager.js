@@ -1,4 +1,4 @@
-var socket = io.connect("https://1147a391.ngrok.io")
+var socket = io.connect("https://c0220d7c.ngrok.io")
 indexPage = false
 fAdded = false
 username = null
@@ -16,6 +16,7 @@ addToGroup = [[], []]
 chatType = 1
 currUserData = null
 glChatId = null
+friendsFirst = false
 glOnUser = null
 usersTyping = []
 
@@ -34,12 +35,14 @@ function scrollTopPls(){
 }
 
 function removeAssets(exceptions){
-	var assets = [".fgs", ".gc", ".friContainer", ".chatContainer", ".userChatGlobal", ".gs", ".defaultText", ".uProfileBox", ".loginBox", ".sq", ".bottomNav", ".notContainer", ".topNav", ".defaultText"]
+	var assets = [".bb",".fgs", ".gc", ".friContainer", ".chatContainer", ".userChatGlobal", ".gs", ".defaultText", ".uProfileBox", ".loginBox", ".sq", ".bottomNav", ".notContainer", ".topNav", ".defaultText"]
+	var x = false
 	for (var i in assets){
 		if (!(exceptions.includes(assets[i]))){
 			$(assets[i]).remove() 
 		}
 	}
+	return x
 }
 
 function checkForSpace(){
@@ -116,6 +119,16 @@ function render(pageRequest){
 		$(".him").attr("src", "app-assets/homeS.svg")
 		$(".bim").attr("src", "app-assets/bellN.svg")
 		$(".fim").attr("src", "app-assets/userN.svg")
+	}else if (pageRequest == "homeA3"){
+		page = "home"
+		socket.emit("changePage", page, username, null)
+		removeAssets(['.topNav', '.bottomNav'])
+		$("body").css("background-color", "#e7e7e7");
+		$("center").append("<div class='topNav'><input class='searchQuery' placeholder='Search Users'></input></div>")
+		$("center").append("<div class='defaultText' id='a2'>No New Posts</div>")
+		$(".him").attr("src", "app-assets/homeS.svg")
+		$(".bim").attr("src", "app-assets/bellN.svg")
+		$(".fim").attr("src", "app-assets/userN.svg")
 	}else if(pageRequest === "sq"){
 		page = "sq"
 		socket.emit("changePage", page, username, null)
@@ -133,6 +146,15 @@ function render(pageRequest){
 		$(".him").attr("src", "app-assets/homeN.svg")
 		$(".bim").attr("src", "app-assets/bellN.svg")
 		$(".fim").attr("src", "app-assets/userS.svg")
+	}else if(pageRequest == "friendsA2"){
+		page = "friends"
+		socket.emit("changePage", page, username, glChatId)
+		removeAssets([".bottomNav"])
+		$("center").append("<div class='friContainer'></div>")
+		$(".him").attr("src", "app-assets/homeN.svg")
+		$(".bim").attr("src", "app-assets/bellN.svg")
+		$(".fim").attr("src", "app-assets/userS.svg")
+
 	}else if(pageRequest == ("mailA1")){
 		removeAssets([".bottomNav"])
 		page = "mail"
@@ -187,7 +209,7 @@ function render(pageRequest){
 		page = "friendsFGS"
 		removeAssets([])
 		socket.emit("changePage", "friends", username, glChatId)
-		$("center").append("<div class='fgs'><div class='fgsTopNav'><div class='bbc'><img class='uCBA' src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='fgsTitle'>Group Settings</div></div><div class='fgsTitle2'>Friends</div><div class='fgsContainer'></div><div class='gsb'><button class='fgsAddMembers'>Add Members</button></div>")
+		$("center").append("<div class='fgs'><div class='fgsTopNav'><div class='bbc'><img class='uCBA' src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='fgsTitle'>Add Members</div></div><div class='fgsTitle2'>Friends</div><div class='fgsContainer'></div><div class='gsb'><button class='fgsAddMembers'>Add Members</button></div>")
 	}else if(pageRequest == "friendsFGSA2"){
 		page = "friendsFGS"
 		removeAssets([])
@@ -315,16 +337,19 @@ $(function(){
 	})
 
 	socket.on("getNotificationsResponse", function(notifications){
-		render("mailA1")
+		if (!(page == "mail")){
+			render("mailA1")
+		}
 		currNotifications = notifications
 		if (notifications[0].length != 0){
 			$(".defaultText").remove()
 			for (var i in notifications[0]){
 				if (notifications[1][i] == "friendRequest"){
 					if ((parseInt(i) +  1) != notifications[0].length){
-						$(".notContainer").append("<div class='notBox' id='friendRequest'>" + notifications[0][i] + " sent you a friend request!<div class='notButtons'><div class='notButton1' id='" + notifications[0][i] + "'><img src='app-assets/checkmark.svg' class='accFriendRequest'></img></div><div class='notButton2' id='" + notifications[0][i] + "'><img src='app-assets/crossmark.svg' class='dismissNotification'></img></div></div></div>")
+						$(".notContainer").append("<div class='notBox' id='friendRequest'><div class='notBoxUName'>" + notifications[0][i] + "</div><div class='notBoxName'>sent you a friend request!</div><div class='notButtons'><div class='notButton2' id='" + notifications[0][i] + "'><img src='app-assets/crossmark.svg' class='dismissNotification'></img></div><div class='notButton1' id='" + notifications[0][i] + "'><img src='app-assets/checkmark.svg' class='accFriendRequest'></img></div></div></div>")
+
 					}else{
-						$(".notContainer").append("<div class='notBoxL' id='friendRequest'>" + notifications[0][i] + " sent you a friend request!<div class='notButtons'><div class='notButton1' id='" + notifications[0][i] + "'><img src='app-assets/checkmark.svg' class='accFriendRequest'></img></div><div class='notButton2' id='" + notifications[0][i] + "'><img src='app-assets/crossmark.svg' class='dismissNotification'></img></div></div></div>")
+						$(".notContainer").append("<div class='notBoxL' id='friendRequest'><div class='notBoxUName'>" + notifications[0][i] + "</div><div class='notBoxName'>sent you a friend request!</div><div class='notButtons'><div class='notButton2' id='" + notifications[0][i] + "'><img src='app-assets/crossmark.svg' class='dismissNotification'></img></div><div class='notButton1' id='" + notifications[0][i] + "'><img src='app-assets/checkmark.svg' class='accFriendRequest'></img></div></div></div>")
 
 					}
 				}else{
@@ -359,7 +384,13 @@ $(function(){
 		render('groupCreate')
 		if (data.length != 0){
 			for (var i in data[0]){
-				$(".gcContainer").append("<div class='gcFriendBox'><div class='gcBoxUName'>" + data[0][i] + "</div><div class='gcBoxName'>" + data[1][i] + "</div><div class='gcSelector'></div></div>")
+				if (!(data[0].length == parseInt(i) + 1)){
+					$(".gcContainer").append("<div class='gcFriendBox'><div class='gcBoxUName'>" + data[0][i] + "</div><div class='gcBoxName'>" + data[1][i] + "</div><div class='gcSelector'></div></div>")
+
+				}else{
+					$(".gcContainer").append("<div class='gcFriendBox2'><div class='gcBoxUName'>" + data[0][i] + "</div><div class='gcBoxName'>" + data[1][i] + "</div><div class='gcSelector'></div></div>")
+
+				}
 			}
 		}
 
@@ -402,13 +433,9 @@ $(function(){
 	socket.on("getChatsResponse", function(friends, das){
 		currFriends = friends
 		var dasCounter = 0
-		$(".friBoxButtons2").remove()
-		render("friendsA1")
 		if (friends[0].length != 0){
 			$(".defaultText").remove()
 			for (var i in friends[0]){
-					console.log(i + 1)
-					console.log(friends[0].length)
 					if (friends[1][i] != 0){
 						$(".friContainer").append("<div class='friBox'><div class='friBoxUName'>" + friends[0][i] + "</div><div class='friBoxName'>" + friends[1][i] +"</div><div class='friButtons'><button class='friButton1' id='" + friends[2][i] + "'>Send Message</button></div></div>")
 					}else{
@@ -426,6 +453,11 @@ $(function(){
 
 	socket.on("getChatsReload", function(){
 		if (page != "friendsFGS"){
+			if (page == "friends"){
+				render("friendsA2")
+			}else{
+				render("friendsA1")
+		}
 			socket.emit("getChats", username)
 		}else{
 			socket.emit("getFriendsFGS", username, glChatId)
@@ -474,13 +506,14 @@ $(function(){
 	});
 	$('body').on('click', '.bb', function(){
 		$(".searchQuery").val("")
-		render("homeA2")
+		render("homeA1")
 		searchShown = false
 	});
 	$('body').on('click', '.bbc', function(){
 		console.log(page)
 		if (page == "userChat"){
 			socket.emit("disconnectFromChat", username)
+			render("friendsA1")
 			socket.emit("getChats", username)
 		}else if (page == "groupSettings"){
 			socket.emit("connectToUser", false, glChatId, username)
@@ -488,21 +521,26 @@ $(function(){
 			renderGroupSettings(currUserData)
 		}else{
 			socket.emit("disconnectFromChat", username)
+			render("friendsA1")
 			socket.emit("getChats", username)
 		}
 	});
 	$('body').on('click', '#friends', function(){
 		if (!(page === "friends")){
+			render("friendsA2")
+			friendsFirst = true
+			$(".friBoxButtons2").remove()
 			socket.emit("getChats", username)
 		}
 	});
 	$('body').on('click', '#home', function(){
 		if (!(page === "home")){
-			render("homeA1")
+			render("homeA3")
 		}
 	});
 	$('body').on('click', '#mail', function(){
 		if (!(page === "mail")){
+			render("mailA1")
 			socket.emit("getNotifications", username)
 		}
 	});
@@ -572,7 +610,7 @@ $(function(){
 
 	$('body').on('click', '.gsLeaveGroup', function(){
 		socket.emit('removeFromGroup', username, glChatId)
-		socket.emit("getChats", username)
+		render("friendsA1")
 	})
 
 	$('body').on('click', '.fgsAddMembers', function(){

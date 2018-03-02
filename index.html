@@ -3,6 +3,7 @@
 		<meta http-equiv="Content-Security-Policy" content="default-src *; script-src * 'unsafe-inline'; object-src *; img-src *; media-src *; frame-src *; font-src *; connect-src * ">
 		<meta http-equiv="X-Content-Security-Policy" content="default-src *; script-src * 'unsafe-inline'; object-src *; img-src *; media-src *; frame-src *; font-src *; connect-src *">
 		<meta http-equiv="X-WebKit-CSP" content="default-src *; script-src * 'unsafe-inline'; object-src *; img-src *; media-src *; frame-src *; font-src *; connect-src *">
+		<script src="fastclick.js"></script>
 		<link rel="stylesheet" type="text/css" href="footer-files/style.css">
 		<link rel="stylesheet" type="text/css" href="universal.css">
 		<meta name="viewport" content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no, user-scalable=0"/>
@@ -16,6 +17,8 @@
 		</center>
 		<script>
 			$(function(){
+				console.log("overwrite")
+				FastClick.attach(document.body);
 				indexPage = true
 				if (!(localStorage.getItem("sessionKey") === null)){
 					login(localStorage.sessionKey)

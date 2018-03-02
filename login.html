@@ -9,6 +9,7 @@
 		<script src="manager.js"></script>
 		<link rel="stylesheet" type="text/css" href="login-files/style.css">
 		<link rel="stylesheet" type="text/css" href="universal.css">
+		<script src="fastclick.js"></script>
 
 	</head>
 	<body>
@@ -22,6 +23,7 @@
 		</center>
 		<script>
 			$(function(){
+					FastClick.attach(document.body);
 					var errortextPresent = false;
 					$(".button").click(function(){
 						socket.emit("getSessionKey", $("#email").val(), $("#password").val())
