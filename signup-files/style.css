@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700,900');
 
 body{
+	background-color: #f1f1f1;
 	margin: auto 0;
 }
 
@@ -17,43 +18,45 @@ body{
 
 }
 .loginBox .input{
-	padding-left: 20px;
+	padding-left: 5px;
 	padding-right: 20px;
-	text-align: center;
+	text-align: left;
 	font-family: 'Roboto', sans-serif;
-	font-size: 12px;
-	font-weight: 900;
+	font-size: 15px;
+	font-weight: 700;
 	margin-bottom: 15px;
-	border-radius:30px;
 	border-width: 0;
-	background-color: #ececec;
+	background-color: transparent;
 	height: 50px;
 	width: 200px;
+	border: solid;
+	border-width: 0px;
+	border-color: #e7e7e7;
+	border-bottom-width: 5px;
 	outline: none;
 }
 .loginBox .input::-webkit-input-placeholder{
 	opacity: 100;
+	color: #bbbbbb;
 }
 .loginBox .button{
+	cursor: pointer;
 	font-weight: 700;
 	margin-bottom: 15px;
-	border-radius:30px;
+	border-radius:20px;
 	border-width: 0;
-	background-color: #1a1a1a;
+	background-color:  #e7e7e7;
 	height: 50px;
 	width: 130px;
 	outline: none;
 	font-family: 'Roboto', sans-serif;
 	font-size: 20px;
-	color: #FFFFFF;
+	color: #1a1a1a;
 
 }
 
-.loginBox .button:hover{
-	background-color: #212121
-}
 .loginBox .button:active{
-	background-color: #ff2a5a
+	background-color: #eeeeee
 }
 .loginBox .input:focus::-webkit-input-placeholder {
     opacity: 0;
