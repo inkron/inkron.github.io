@@ -1,4 +1,4 @@
-var socket = io.connect("https://c0220d7c.ngrok.io")
+var socket = io.connect("https://90ebce5b.ngrok.io")
 indexPage = false
 fAdded = false
 username = null
@@ -139,6 +139,7 @@ function render(pageRequest){
 		$(".sq").append('<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>')
 	}else if(pageRequest == ("friendsA1")){
 		page = "friends"
+		console.log("called")
 		socket.emit("changePage", page, username, glChatId)
 		removeAssets([])
 		$("center").append("<div class='bottomNav'><div class='bnButton' id='friends'><img class='fim' id='Image' src='app-assets/userN.svg'></img></div><div class='bnButton' id='home'><img class='him' id='Image' src='app-assets/homeN.svg'></img></div><div class='bnButton' id='mail'><img class='bim' id='Image' src='app-assets/bellN.svg'></img></div></div>")
@@ -208,12 +209,12 @@ function render(pageRequest){
 		addToGroup = [[],[]]
 		page = "friendsFGS"
 		removeAssets([])
-		socket.emit("changePage", "friends", username, glChatId)
+		socket.emit("changePage", "friendsFGS", username, glChatId)
 		$("center").append("<div class='fgs'><div class='fgsTopNav'><div class='bbc'><img class='uCBA' src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='fgsTitle'>Add Members</div></div><div class='fgsTitle2'>Friends</div><div class='fgsContainer'></div><div class='gsb'><button class='fgsAddMembers'>Add Members</button></div>")
 	}else if(pageRequest == "friendsFGSA2"){
 		page = "friendsFGS"
 		removeAssets([])
-		socket.emit("changePage", "friends", username, glChatId)
+		socket.emit("changePage", "friendsFGS", username, glChatId)
 		$("center").append("<div class='fgs'><div class='fgsTopNav'><div class='bbc'><img class='uCBA' src='app-assets/backarrow.svg' width='30px' height='30px'></img></div><div class='fgsTitle'>Add Members</div></div><div class='fgsContainer'></div></div>")
 
 	}
@@ -321,6 +322,7 @@ $(function(){
 	})
 
 	socket.on("updateUserData", function(data, user){
+		console.log("updating data")
 		currUserData = data;
 		if (page == "userChat"){
 			if (chatType == 2){
@@ -329,9 +331,13 @@ $(function(){
 		}else if(page =="groupSettings"){
 			renderGroupSettings(data)
 		}else if (page =="friendsFGS"){
-			socket.emit("getFriendsFGS", username, glChatId)
+			if (user != username){
+					socket.emit("getFriendsFGS", username, glChatId)
+				}
 		}
 		if (user == username){
+			console.log("ROFL")
+			render("friendsA1")
 			socket.emit("getChats", username)
 		}
 	})
@@ -372,12 +378,7 @@ $(function(){
 			fAdded = fad
 			console.log(JSON.stringify(payload))
 			curruProfile = payload
-			if (!(posts.length == 0)){
-					render("uProfileA1")
-			}else{
-					curruPosts = posts
-					render("uProfileA2")
-			}
+			render("uProfileA2")
 	})
 
 	socket.on('getFriendsFNGResponse', function(data){
@@ -452,6 +453,7 @@ $(function(){
 	})
 
 	socket.on("getChatsReload", function(){
+		console.log("reloadinggg")
 		if (page != "friendsFGS"){
 			if (page == "friends"){
 				render("friendsA2")
