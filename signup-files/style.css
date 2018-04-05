@@ -39,6 +39,12 @@ body{
 	opacity: 100;
 	color: #bbbbbb;
 }
+
+.loginBox .input::-moz-placeholder{
+	opacity: 100;
+	color: #bbbbbb;
+}
+
 .loginBox .button{
 	cursor: pointer;
 	font-weight: 700;
@@ -59,6 +65,10 @@ body{
 	background-color: #eeeeee
 }
 .loginBox .input:focus::-webkit-input-placeholder {
+    opacity: 0;
+}
+
+.loginBox .input:focus::-moz-placeholder {
     opacity: 0;
 }
 .errortext{

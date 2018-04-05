@@ -21,6 +21,7 @@
 				if (!(localStorage.getItem("sessionKey") === null)){
 					login(localStorage.sessionKey)
 				}else{
+					$(".fail").remove()
 					$('center').append('<div class="loginBox"><div class="buttons"><img src="login-files/logo.svg" width="100px" class="logo"><form action="signup.html" method="get"><button class="button" id="b1">signup</button></form><form action="login.html" method="get"><button class="button" id="b2">login</button></form></div></div>')
 				}
 			});

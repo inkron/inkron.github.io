@@ -80,6 +80,14 @@ body{
 	color: rgb(200,200,200);
 }
 
+.topNav .searchQuery:focus::-webkit-input-placeholder {
+    opacity: 0;
+}
+
+.topNav .searchQuery:focus::-moz-placeholder  {
+    opacity: 0;
+}
+
 .topNav .searchQuery:focus{
 	background-color: #cdcdcd;
 }

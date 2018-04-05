@@ -22,6 +22,7 @@ body{
 .loginBox .buttons .logo{
 	margin-bottom: 20px;
 }
+
 .loginBox .buttons .button{
 	font-weight: 700;
 	cursor: pointer;
@@ -40,4 +41,12 @@ body{
 .loginBox .button:active{
 	background-color: #eeeeee;
 	border-color: #eeeeee;
+}
+
+
+@-moz-document url-prefix() {
+	.loginBox .buttons .logo{
+		margin-left: 30px;
+		margin-bottom: 20px;
+	}
 }

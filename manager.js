@@ -1,4 +1,4 @@
-var socket = io.connect("https://90ebce5b.ngrok.io")
+var socket = io.connect("http://cce7e4b7.ngrok.io")
 indexPage = false
 fAdded = false
 username = null
@@ -221,6 +221,7 @@ function render(pageRequest){
 }
 $(function(){
 	var searchShown = false;
+
 	socket.on("loginResponse", function(params, payload){
 			if (params === true){
 				username = payload[0]
@@ -603,7 +604,7 @@ $(function(){
 		$(this).parent().parent().remove()
 		currFriends[0].splice(currFriends[0].indexOf(user), 1)
 		currFriends[1].splice(currFriends[0].indexOf(user), 1)
-		socket.emit("removeFriend", user, username)
+		socket.emit("removeFriend", user, username, glChatId)
 		if (currFriends[0].length == 0){
 			$("center").append("<div class='defaultText' id='a1'>Friend List Empty</div>")
 			$(".friBoxButtons").remove()
@@ -683,7 +684,15 @@ $(function(){
 	})
 
 	$('body').on('click', '.uProfileSendMessage', function(){
-		socket.emit("removeFriend", curruProfile["username"], username)
+		if (currUserChat != null){
+			if (currUserChat[0] === curruProfile["username"]){
+				socket.emit("removeFriend", curruProfile["username"], username, glChatId)
+			}else{
+				socket.emit("removeFriend", curruProfile["username"], username, null)
+			}
+		}else{
+			socket.emit("removeFriend", curruProfile["username"], username, null)
+		}
 	})
 	$('body').on('click', function(){
 	})
